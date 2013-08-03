@@ -23,6 +23,13 @@ set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib -lSDL -l
 
 target_link_libraries(QuakeToon vendor )
 
+get_target_property(quaketoonbin QuakeToon LOCATION)
+
+add_custom_command(TARGET QuakeToon
+    POST_BUILD
+    COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/bin
+    COMMAND cp ${quaketoonbin} ${CMAKE_SOURCE_DIR}/bin/QuakeToon
+)
 
 file ( GLOB GAME_FILES     game/*.c game/acesrc/*.c )
 

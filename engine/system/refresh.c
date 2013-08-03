@@ -191,6 +191,9 @@ GLimp_InitGraphics(qboolean fullscreen)
 	int stencil_bits;
 	char title[24];
 
+	//QUAKETOON: forcing window
+	fullscreen = false;
+
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height))
 	{
 		/* Are we running fullscreen? */
