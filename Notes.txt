@@ -1,0 +1,3 @@
+
+SDL Build
+./configure CFLAGS="-arch i386 -O2 -pipe" CXXFLAGS="-arch i386 -O2 -pipe" LDFLAGS="-arch i386"  --with-x=no

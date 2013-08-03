@@ -16,10 +16,13 @@ file ( GLOB RENDERER_FILES renderer/*.c )
 file ( GLOB SYSTEM_FILES   system/*.c ) 
 file ( GLOB SOUND_FILES    sound/*.c ) 
 
-set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${GAME_FILES} ${UI_FILES} ${CLIENT_FILES} ${RENDERER_FILES} ${SOUND_FILES} ${SYSTEM_FILES} )
+file ( GLOB OSX_FILES    system/osx/*.m ) 
+
+set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${GAME_FILES} ${UI_FILES} ${CLIENT_FILES} ${RENDERER_FILES} ${SOUND_FILES} ${SYSTEM_FILES} ${OSX_FILES} )
 
 add_executable(QuakeToon ${SOURCE_FILES})
 set (CMAKE_EXE_LINKER_FLAGS "-lz -framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")
+set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib -lSDL -lSDLmain")
 
 target_link_libraries(QuakeToon vendor )
 
