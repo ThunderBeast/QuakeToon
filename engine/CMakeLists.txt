@@ -43,5 +43,23 @@ add_custom_command(TARGET game
     COMMAND cp ${gamebin} ${CMAKE_SOURCE_DIR}/bin/baseq2/game.so
 )
 
+#dedicated server
+
+set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${SYSTEM_FILES} )
+
+add_executable(QuakeToonServer ${SOURCE_FILES})
+
+set_target_properties(QuakeToonServer PROPERTIES COMPILE_DEFINITIONS "DEDICATED_ONLY=1 DC_ONLY=1")
+
+target_link_libraries(QuakeToonServer vendor )
+
+get_target_property(serverbin QuakeToonServer LOCATION)
+
+add_custom_command(TARGET QuakeToonServer
+    POST_BUILD    
+    COMMAND cp ${serverbin} ${CMAKE_SOURCE_DIR}/bin/QuakeToonServer
+)
+
+
 
 

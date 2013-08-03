@@ -35,6 +35,8 @@
  * =======================================================================
  */
 
+#ifndef DEDICATED_ONLY   
+
 #include <assert.h>
 #include <errno.h>
 
@@ -285,4 +287,6 @@ Do_Key_Event(int key, qboolean down)
 {
 	Key_Event(key, down, Sys_Milliseconds());
 }
+
+#endif
 

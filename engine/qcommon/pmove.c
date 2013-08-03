@@ -69,6 +69,18 @@ float pm_waterfriction   = 1;
 // Knightmare- this function sets the max speed varibles
 void SetSpeedMax(void)
 {
+
+#ifdef DEDICATED_ONLY     
+    
+    pm_maxspeed        = DEFAULT_MAXSPEED;
+    pm_duckspeed       = DEFAULT_DUCKSPEED;
+    pm_waterspeed      = DEFAULT_WATERSPEED;
+    pm_accelerate      = DEFAULT_ACCELERATE;
+    pm_wateraccelerate = pm_accelerate;
+    pm_stopspeed       = DEFAULT_STOPSPEED;
+
+#else    
+
     if (!clientstate)     // defaults, used if not connected
     {
         pm_maxspeed        = DEFAULT_MAXSPEED;
@@ -125,6 +137,7 @@ void SetSpeedMax(void)
     {
         pm_stopspeed = DEFAULT_STOPSPEED;
     }
+#endif    
 }
 
 

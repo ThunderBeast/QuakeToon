@@ -462,7 +462,9 @@ void SV_InitGameProgs(void)
     import.args             = Cmd_Args;
     import.AddCommandString = Cbuf_AddText;
 
+#ifndef DEDICATED_ONLY     
     import.DebugGraph = SCR_DebugGraph;
+#endif    
 
     // Knightmare- support game DLL loading from pak files thru engine
     // This can be used to load script files, etc

@@ -25,6 +25,8 @@
  * =======================================================================
  */
 
+#ifndef DEDICATED_ONLY     
+
 #include "../renderer/r_local.h"
 #include "../client/keys.h"
 #include "input.h"
@@ -753,4 +755,6 @@ IN_BackendMove(usercmd_t *cmd)
 		IN_ClearMouseState();
 	}
 }
+
+#endif
 

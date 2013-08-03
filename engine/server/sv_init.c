@@ -356,8 +356,11 @@ void SV_InitGame(void)
     else
     {
         // make sure the client is down
+#ifndef DEDICATED_ONLY        
         CL_Drop();
         SCR_BeginLoadingPlaque();
+#endif
+
     }
 
     // get any latched variable changes (maxclients, etc)
@@ -509,7 +512,9 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
     {
         if (!dedicated->value)
         {
+#ifndef DEDICATED_ONLY                 
             SCR_BeginLoadingPlaque();                                   // for local system
+#endif            
         }
         SV_BroadcastCommand("changing\n");
         SV_SpawnServer(level, spawnpoint, ss_cinematic, attractloop, loadgame);
@@ -518,7 +523,9 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
     {
         if (!dedicated->value)
         {
+#ifndef DEDICATED_ONLY                 
             SCR_BeginLoadingPlaque();                                   // for local system
+#endif            
         }
         SV_BroadcastCommand("changing\n");
         SV_SpawnServer(level, spawnpoint, ss_demo, attractloop, loadgame);
@@ -527,7 +534,9 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
     {
         if (!dedicated->value)
         {
+#ifndef DEDICATED_ONLY                 
             SCR_BeginLoadingPlaque();                                   // for local system
+#endif            
         }
         SV_BroadcastCommand("changing\n");
         SV_SpawnServer(level, spawnpoint, ss_pic, attractloop, loadgame);
@@ -536,7 +545,9 @@ void SV_Map(qboolean attractloop, char *levelstring, qboolean loadgame)
     {
         if (!dedicated->value)
         {
+#ifndef DEDICATED_ONLY                 
             SCR_BeginLoadingPlaque();                                   // for local system
+#endif            
         }
         SV_BroadcastCommand("changing\n");
         SV_SendClientMessages();

@@ -132,7 +132,9 @@ void Com_Printf(char *fmt, ...)
         return;
     }
 
+#ifndef DEDICATED_ONLY   
     Con_Print(msg);
+#endif    
 
     // also echo to debugging console
     if (msg[strlen(msg) - 1] != '\r')   // skip overwrittten outputs
@@ -243,7 +245,9 @@ void Com_Error(int code, char *fmt, ...)
 
     if (code == ERR_DISCONNECT)
     {
+#ifndef DEDICATED_ONLY        
         CL_Drop();
+#endif        
         recursive = false;
         longjmp(abortframe, -1);
     }
@@ -253,14 +257,19 @@ void Com_Error(int code, char *fmt, ...)
                    S_COLOR_RED "ERROR: %s\n"
                    S_COLOR_RED "********************\n", msg);
         SV_Shutdown(va("Server crashed: %s\n", msg), false);
+
+#ifndef DEDICATED_ONLY        
         CL_Drop();
+#endif        
         recursive = false;
         longjmp(abortframe, -1);
     }
     else
     {
         SV_Shutdown(va("Server fatal crashed: %s\n", msg), false);
+#ifndef DEDICATED_ONLY        
         CL_Shutdown();
+#endif        
     }
 
     if (logfile)
@@ -284,7 +293,9 @@ void Com_Error(int code, char *fmt, ...)
 void Com_Quit(void)
 {
     SV_Shutdown("Server quit\n", false);
+#ifndef DEDICATED_ONLY    
     CL_Shutdown();
+#endif    
 
     if (logfile)
     {
@@ -1260,7 +1271,12 @@ char *MSG_ReadStringLine(sizebuf_t *msg_read)
 
 float MSG_ReadCoord(sizebuf_t *msg_read)
 {
+
+#ifndef DEDICATED_ONLY         
     if (LegacyProtocol())
+#else
+    if (false)
+#endif            
     {
         return MSG_ReadShort(msg_read) * (1.0 / 8);
     }
@@ -1284,7 +1300,11 @@ float MSG_ReadCoord(sizebuf_t *msg_read)
 
 void MSG_ReadPos(sizebuf_t *msg_read, vec3_t pos)
 {
+#ifndef DEDICATED_ONLY     
     if (LegacyProtocol())
+#else
+    if (false)
+#endif        
     {
         pos[0] = MSG_ReadShort(msg_read) * (1.0 / 8);
         pos[1] = MSG_ReadShort(msg_read) * (1.0 / 8);
@@ -2000,7 +2020,9 @@ void Qcommon_Init(int argc, char **argv)
     Cmd_Init();
     Cvar_Init();
 
+#ifndef DEDICATED_ONLY     
     Key_Init();
+#endif    
 
     // we need to add the early commands twice, because
     // a basedir or cddir needs to be set before execing
@@ -2071,7 +2093,10 @@ void Qcommon_Init(int argc, char **argv)
     Netchan_Init();
 
     SV_Init();
+
+#ifndef DEDICATED_ONLY    
     CL_Init();
+#endif    
 
 #ifdef _WIN32          // Knightmare- remove startup logo, code from TomazQuake
 #ifdef NEW_DED_CONSOLE // Hide console
@@ -2100,7 +2125,9 @@ void Qcommon_Init(int argc, char **argv)
     else
     {           // the user asked for something explicit
                 // so drop the loading plaque
+#ifndef DEDICATED_ONLY             
         SCR_EndLoadingPlaque();
+#endif        
     }
 
     Com_Printf("====== KMQuake2 Initialized ======\n\n");
@@ -2213,7 +2240,9 @@ void Qcommon_Frame(int msec)
         time_between = Sys_Milliseconds();
     }
 
+#ifndef DEDICATED_ONLY
     CL_Frame(msec);
+#endif    
 
     if (host_speeds->value)
     {

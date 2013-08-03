@@ -452,7 +452,9 @@ void SV_WriteScreenshot(void)
 
     Com_sprintf(name, sizeof(name), "%s/save/current/shot.jpg", FS_Gamedir());
 
+#ifndef DEDICATED_ONLY     
     R_ScaledScreenshot(name);
+#endif    
 }
 
 
@@ -709,10 +711,12 @@ void SV_Loadgame_f(void)
     // Knightmare- set saveshot name
     if (!dedicated->value && (!strcmp(Cmd_Argv(1), "quick") || !strcmp(Cmd_Argv(1), "quik")))
     {
+#ifndef DEDICATED_ONLY                     
         Com_sprintf(sv_loadshotname, sizeof(sv_loadshotname), "save/%s/shot.jpg", Cmd_Argv(1));
         R_FreePic(sv_loadshotname);
         Com_sprintf(sv_loadshotname, sizeof(sv_loadshotname), "/save/%s/shot.jpg", Cmd_Argv(1));
         load_saveshot = sv_loadshotname;
+#endif        
     }
 
     SV_CopySaveGame(Cmd_Argv(1), "current");
@@ -774,7 +778,9 @@ void SV_Savegame_f(void)
     // Knightmare- grab screen for quicksave
     if (!dedicated->value && (!strcmp(Cmd_Argv(1), "quick") || !strcmp(Cmd_Argv(1), "quik")))
     {
+#ifndef DEDICATED_ONLY             
         R_GrabScreen();
+#endif        
     }
 
     if ((maxclients->value == 1) && (svs.clients[0].edict->client->ps.stats[STAT_HEALTH] <= 0))

@@ -804,8 +804,7 @@ NET_Config(qboolean multiplayer)
 
 /* =================================================================== */
 
-int
-NET_Socket(char *net_interface, int port, netsrc_t type, int family)
+int NET_Socket(char *net_interface, int port, netsrc_t type, int family)
 {
 	char Buf[BUFSIZ], *Host, *Service;
 	int newsocket, Error;
@@ -850,8 +849,7 @@ NET_Socket(char *net_interface, int port, netsrc_t type, int family)
 
 	for (ai = res; ai != NULL; ai = ai->ai_next)
 	{
-		if ((newsocket =
-				 socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol)) == -1)
+		if ((newsocket = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol)) == -1)				 
 		{
 			Com_Printf("NET_Socket: socket: %s\n", strerror(errno));
 			continue;

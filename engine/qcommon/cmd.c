@@ -1075,8 +1075,11 @@ void Cmd_ExecuteString(char *text)
         return;
     }
 
+#ifndef DEDICATED_ONLY       
     // send it as a server command if we are connected
     Cmd_ForwardToServer();
+#endif
+    
 }
 
 

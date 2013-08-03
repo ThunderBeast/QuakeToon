@@ -25,6 +25,8 @@
  * =======================================================================
  */
 
+#ifndef DEDICATED_ONLY     
+
 #include "../renderer/r_local.h"
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>
@@ -406,4 +408,6 @@ GLimp_Shutdown(void)
 
 	//gl_state.hwgamma = false;
 }
+
+#endif
 
