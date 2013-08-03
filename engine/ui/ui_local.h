@@ -38,10 +38,10 @@
 // normal keys should be passed as lowercased ascii
 
 #define K_BACKSPACE         127
-#define K_UPARROW           128
-#define K_DOWNARROW         129
-#define K_LEFTARROW         130
-#define K_RIGHTARROW        131
+#define K_UPARROW           132
+#define K_DOWNARROW         133
+#define K_LEFTARROW         134
+#define K_RIGHTARROW        135
 
 #define QMF_LEFT_JUSTIFY    0x00000001
 #define QMF_GRAYED          0x00000002
