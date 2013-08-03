@@ -1,6 +1,6 @@
 /* zconf.h -- configuration of the zlib compression library
  * Copyright (C) 1995-1998 Jean-loup Gailly.
- * For conditions of distribution and use, see copyright notice in zlib.h 
+ * For conditions of distribution and use, see copyright notice in zlib.h
  */
 
 /* @(#) $Id$ */
@@ -13,39 +13,39 @@
  * compile with -DZ_PREFIX. The "standard" zlib should be compiled without it.
  */
 #ifdef Z_PREFIX
-#  define deflateInit_	z_deflateInit_
-#  define deflate	z_deflate
-#  define deflateEnd	z_deflateEnd
-#  define inflateInit_ 	z_inflateInit_
-#  define inflate	z_inflate
-#  define inflateEnd	z_inflateEnd
-#  define deflateInit2_	z_deflateInit2_
-#  define deflateSetDictionary z_deflateSetDictionary
-#  define deflateCopy	z_deflateCopy
-#  define deflateReset	z_deflateReset
-#  define deflateParams	z_deflateParams
-#  define inflateInit2_	z_inflateInit2_
-#  define inflateSetDictionary z_inflateSetDictionary
-#  define inflateSync	z_inflateSync
-#  define inflateSyncPoint z_inflateSyncPoint
-#  define inflateReset	z_inflateReset
-#  define compress	z_compress
-#  define compress2	z_compress2
-#  define uncompress	z_uncompress
-#  define adler32	z_adler32
-#  define crc32		z_crc32
-#  define get_crc_table z_get_crc_table
+#  define deflateInit_            z_deflateInit_
+#  define deflate                 z_deflate
+#  define deflateEnd              z_deflateEnd
+#  define inflateInit_            z_inflateInit_
+#  define inflate                 z_inflate
+#  define inflateEnd              z_inflateEnd
+#  define deflateInit2_           z_deflateInit2_
+#  define deflateSetDictionary    z_deflateSetDictionary
+#  define deflateCopy             z_deflateCopy
+#  define deflateReset            z_deflateReset
+#  define deflateParams           z_deflateParams
+#  define inflateInit2_           z_inflateInit2_
+#  define inflateSetDictionary    z_inflateSetDictionary
+#  define inflateSync             z_inflateSync
+#  define inflateSyncPoint        z_inflateSyncPoint
+#  define inflateReset            z_inflateReset
+#  define compress                z_compress
+#  define compress2               z_compress2
+#  define uncompress              z_uncompress
+#  define adler32                 z_adler32
+#  define crc32                   z_crc32
+#  define get_crc_table           z_get_crc_table
 
-#  define Byte		z_Byte
-#  define uInt		z_uInt
-#  define uLong		z_uLong
-#  define Bytef	        z_Bytef
-#  define charf		z_charf
-#  define intf		z_intf
-#  define uIntf		z_uIntf
-#  define uLongf	z_uLongf
-#  define voidpf	z_voidpf
-#  define voidp		z_voidp
+#  define Byte                    z_Byte
+#  define uInt                    z_uInt
+#  define uLong                   z_uLong
+#  define Bytef                   z_Bytef
+#  define charf                   z_charf
+#  define intf                    z_intf
+#  define uIntf                   z_uIntf
+#  define uLongf                  z_uLongf
+#  define voidpf                  z_voidpf
+#  define voidp                   z_voidp
 #endif
 
 #if (defined(_WIN32) || defined(__WIN32__)) && !defined(WIN32)
@@ -71,7 +71,7 @@
 #  define UNALIGNED_OK
 #endif
 
-#if (defined(MSDOS) || defined(_WINDOWS) || defined(WIN32))  && !defined(STDC)
+#if (defined(MSDOS) || defined(_WINDOWS) || defined(WIN32)) && !defined(STDC)
 #  define STDC
 #endif
 #if defined(__STDC__) || defined(__cplusplus) || defined(__OS2__)
@@ -87,7 +87,7 @@
 #endif
 
 /* Some Mac compilers merge all .h files incorrectly: */
-#if defined(__MWERKS__) || defined(applec) ||defined(THINK_C) ||defined(__SC__)
+#if defined(__MWERKS__) || defined(applec) || defined(THINK_C) || defined(__SC__)
 #  define NO_DUMMY_DECL
 #endif
 
@@ -103,9 +103,9 @@
 /* Maximum value for memLevel in deflateInit2 */
 #ifndef MAX_MEM_LEVEL
 #  ifdef MAXSEG_64K
-#    define MAX_MEM_LEVEL 8
+#    define MAX_MEM_LEVEL    8
 #  else
-#    define MAX_MEM_LEVEL 9
+#    define MAX_MEM_LEVEL    9
 #  endif
 #endif
 
@@ -115,29 +115,29 @@
  * gzip.)
  */
 #ifndef MAX_WBITS
-#  define MAX_WBITS   15 /* 32K LZ77 window */
+#  define MAX_WBITS    15 /* 32K LZ77 window */
 #endif
 
 /* The memory requirements for deflate are (in bytes):
-            (1 << (windowBits+2)) +  (1 << (memLevel+9))
- that is: 128K for windowBits=15  +  128K for memLevel = 8  (default values)
- plus a few kilobytes for small objects. For example, if you want to reduce
- the default memory requirements from 256K to 128K, compile with
-     make CFLAGS="-O -DMAX_WBITS=14 -DMAX_MEM_LEVEL=7"
- Of course this will generally degrade compression (there's no free lunch).
+ *          (1 << (windowBits+2)) +  (1 << (memLevel+9))
+ * that is: 128K for windowBits=15  +  128K for memLevel = 8  (default values)
+ * plus a few kilobytes for small objects. For example, if you want to reduce
+ * the default memory requirements from 256K to 128K, compile with
+ *   make CFLAGS="-O -DMAX_WBITS=14 -DMAX_MEM_LEVEL=7"
+ * Of course this will generally degrade compression (there's no free lunch).
+ *
+ * The memory requirements for inflate are (in bytes) 1 << windowBits
+ * that is, 32K for windowBits=15 (default value) plus a few kilobytes
+ * for small objects.
+ */
 
-   The memory requirements for inflate are (in bytes) 1 << windowBits
- that is, 32K for windowBits=15 (default value) plus a few kilobytes
- for small objects.
-*/
-
-                        /* Type declarations */
+/* Type declarations */
 
 #ifndef OF /* function prototypes */
 #  ifdef STDC
-#    define OF(args)  args
+#    define OF(args)    args
 #  else
-#    define OF(args)  ()
+#    define OF(args)    ()
 #  endif
 #endif
 
@@ -148,18 +148,18 @@
  * just define FAR to be empty.
  */
 #if (defined(M_I86SM) || defined(M_I86MM)) && !defined(__32BIT__)
-   /* MSC small or medium model */
+/* MSC small or medium model */
 #  define SMALL_MEDIUM
 #  ifdef _MSC_VER
-#    define FAR _far
+#    define FAR    _far
 #  else
-#    define FAR far
+#    define FAR    far
 #  endif
 #endif
 #if defined(__BORLANDC__) && (defined(__SMALL__) || defined(__MEDIUM__))
 #  ifndef __32BIT__
 #    define SMALL_MEDIUM
-#    define FAR _far
+#    define FAR    _far
 #  endif
 #endif
 
@@ -177,22 +177,22 @@
 #      include <windows.h>
 #    endif
 #    ifdef WIN32
-#      define ZEXPORT  WINAPI
-#      define ZEXPORTVA  WINAPIV
+#      define ZEXPORT      WINAPI
+#      define ZEXPORTVA    WINAPIV
 #    else
-#      define ZEXPORT  WINAPI _export
-#      define ZEXPORTVA  FAR _cdecl _export
+#      define ZEXPORT      WINAPI _export
+#      define ZEXPORTVA    FAR _cdecl _export
 #    endif
 #  endif
 #  if defined (__BORLANDC__)
 #    if (__BORLANDC__ >= 0x0500) && defined (WIN32)
 #      include <windows.h>
-#      define ZEXPORT __declspec(dllexport) WINAPI
-#      define ZEXPORTVA __declspec(dllexport) WINAPIV
+#      define ZEXPORT        __declspec(dllexport) WINAPI
+#      define ZEXPORTVA      __declspec(dllexport) WINAPIV
 #    else
 #      if defined (_Windows) && defined (__DLL__)
-#        define ZEXPORT _export
-#        define ZEXPORTVA _export
+#        define ZEXPORT      _export
+#        define ZEXPORTVA    _export
 #      endif
 #    endif
 #  endif
@@ -200,9 +200,9 @@
 
 #if defined (__BEOS__)
 #  if defined (ZLIB_DLL)
-#    define ZEXTERN extern __declspec(dllexport)
+#    define ZEXTERN    extern __declspec(dllexport)
 #  else
-#    define ZEXTERN extern __declspec(dllimport)
+#    define ZEXTERN    extern __declspec(dllimport)
 #  endif
 #endif
 
@@ -213,7 +213,7 @@
 #  define ZEXPORTVA
 #endif
 #ifndef ZEXTERN
-#  define ZEXTERN extern
+#  define ZEXTERN    extern
 #endif
 
 #ifndef FAR
@@ -221,45 +221,45 @@
 #endif
 
 #if !defined(MACOS) && !defined(TARGET_OS_MAC)
-typedef unsigned char  Byte;  /* 8 bits */
+typedef unsigned char   Byte;  /* 8 bits */
 #endif
-typedef unsigned int   uInt;  /* 16 bits or more */
-typedef unsigned long  uLong; /* 32 bits or more */
+typedef unsigned int    uInt;  /* 16 bits or more */
+typedef unsigned long   uLong; /* 32 bits or more */
 
 #ifdef SMALL_MEDIUM
-   /* Borland C/C++ and some old MSC versions ignore FAR inside typedef */
-#  define Bytef Byte FAR
+/* Borland C/C++ and some old MSC versions ignore FAR inside typedef */
+#  define Bytef    Byte FAR
 #else
-   typedef Byte  FAR Bytef;
+typedef Byte FAR    Bytef;
 #endif
-typedef char  FAR charf;
-typedef int   FAR intf;
-typedef uInt  FAR uIntf;
-typedef uLong FAR uLongf;
+typedef char FAR    charf;
+typedef int FAR     intf;
+typedef uInt FAR    uIntf;
+typedef uLong FAR   uLongf;
 
 #ifdef STDC
-   typedef void FAR *voidpf;
-   typedef void     *voidp;
+typedef void FAR *  voidpf;
+typedef void *      voidp;
 #else
-   typedef Byte FAR *voidpf;
-   typedef Byte     *voidp;
+typedef Byte FAR *  voidpf;
+typedef Byte *      voidp;
 #endif
 
 #ifdef HAVE_UNISTD_H
 #  include <sys/types.h> /* for off_t */
 #  include <unistd.h>    /* for SEEK_* and off_t */
 #  ifdef VMS
-#    include <unixio.h>   /* for off_t */
+#    include <unixio.h>  /* for off_t */
 #  endif
-#  define z_off_t  off_t
+#  define z_off_t     off_t
 #endif
 #ifndef SEEK_SET
-#  define SEEK_SET        0       /* Seek from beginning of file.  */
-#  define SEEK_CUR        1       /* Seek from current position.  */
-#  define SEEK_END        2       /* Set file pointer to EOF plus "offset" */
+#  define SEEK_SET    0           /* Seek from beginning of file.  */
+#  define SEEK_CUR    1           /* Seek from current position.  */
+#  define SEEK_END    2           /* Set file pointer to EOF plus "offset" */
 #endif
 #ifndef z_off_t
-#  define  z_off_t long
+#  define  z_off_t    long
 #endif
 
 /* MVS linker does not support external names larger than 8 bytes */
@@ -288,5 +288,4 @@ typedef uLong FAR uLongf;
 #   pragma map(inflate_trees_fixed,"INTRFI")
 #   pragma map(inflate_trees_free,"INTRFR")
 #endif
-
 #endif /* _ZCONF_H */
