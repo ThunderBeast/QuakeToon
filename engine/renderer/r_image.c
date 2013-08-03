@@ -22,7 +22,6 @@
 
 #include "r_local.h"
 //#include "r_cin.h"
-#include "include/jpeglib.h"
 
 image_t gltextures[MAX_GLTEXTURES];
 int     numgltextures;
@@ -551,7 +550,7 @@ void R_LoadTGA(char *filename, byte **pic, int *width, int *height)
     byte        *dst, *ColorMap, *data, *pdata;
 
     // load file
-    FS_LoadFile(filename, &data);
+    FS_LoadFile(filename, (void**) &data);
 
     if (!data)
     {
@@ -1121,8 +1120,12 @@ breakOut:;
  *
  * =================================================================
  */
+
+#ifdef REPLACE_WITH_STB
+
 void jpg_null(j_decompress_ptr cinfo)
 {
+
 }
 
 
@@ -1273,6 +1276,13 @@ void R_LoadJPG(char *filename, byte **pic, int *width, int *height)
     // Return the 'rgbadata'
     *pic = rgbadata;
 }
+
+#else
+void R_LoadJPG(char *filename, byte **pic, int *width, int *height)
+{
+
+}
+#endif
 
 
 /*
@@ -2104,7 +2114,7 @@ void R_InitFailedImgList(void)
 
     for (i = 0; i < NUM_FAIL_IMAGES; i++)
     {
-        sprintf(lastFailedImage[i], "\0");
+        lastFailedImage[i][0] = 0;
     }
 
     failedImgListIndex = 0;
@@ -2427,7 +2437,7 @@ void R_FreeUnusedImages(void)
         //	CIN_FreeCin(image->texnum);
 
         // free it
-        qglDeleteTextures(1, &image->texnum);
+        qglDeleteTextures(1, (const GLuint *) &image->texnum);
         memset(image, 0, sizeof(*image));
     }
 }
@@ -2557,7 +2567,7 @@ void R_InitImages(void)
 
     if (qglColorTableEXT)
     {
-        FS_LoadFile("pics/16to8.dat", &glState.d_16to8table);
+        FS_LoadFile("pics/16to8.dat", (void **) &glState.d_16to8table);
         if (!glState.d_16to8table)
         {
             VID_Error(ERR_FATAL, "Couldn't load pics/16to8.pcx");
@@ -2636,7 +2646,7 @@ void R_FreePic(char *name)
             //	CIN_FreeCin(image->texnum);
 
             // free it
-            qglDeleteTextures(1, &image->texnum);
+            qglDeleteTextures(1, (const GLuint *) &image->texnum);
             memset(image, 0, sizeof(*image));
             return;             //we're done here
         }
@@ -2665,7 +2675,7 @@ void R_ShutdownImages(void)
         //	CIN_FreeCin(image->texnum);
 
         // free it
-        qglDeleteTextures(1, &image->texnum);
+        qglDeleteTextures(1, (const GLuint *) &image->texnum);
         memset(image, 0, sizeof(*image));
     }
 }

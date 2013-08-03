@@ -21,8 +21,6 @@
 // r_misc.c - particle image loading, and screenshots
 
 #include "r_local.h"
-#include "include/jpeglib.h" // Heffo - JPEG Screenshots
-
 
 /*
  * ==================
@@ -273,6 +271,7 @@ byte *saveshotdata;
 
 void R_ScaledScreenshot(char *name)
 {
+#ifdef REPLACE_WITH_STB    
     struct jpeg_compress_struct cinfo;
     struct jpeg_error_mgr       jerr;
     JSAMPROW s[1];
@@ -354,6 +353,7 @@ void R_ScaledScreenshot(char *name)
 
     // Free Reduced screenshot
     free(jpgdata);
+#endif    
 }
 
 
@@ -391,6 +391,7 @@ void R_GrabScreen(void)
  */
 void R_ScreenShot_JPG(qboolean silent)
 {
+    #ifdef REPLACE_WITH_STB
     struct jpeg_compress_struct cinfo;
     struct jpeg_error_mgr       jerr;
     byte     *rgbdata;
@@ -496,6 +497,7 @@ void R_ScreenShot_JPG(qboolean silent)
     {
         VID_Printf(PRINT_ALL, "Wrote %s\n", picname);
     }
+    #endif
 }
 
 

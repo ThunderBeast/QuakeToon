@@ -22,7 +22,6 @@
 
 #include "r_local.h"
 
-
 /*
  * =================
  * GL_Enable

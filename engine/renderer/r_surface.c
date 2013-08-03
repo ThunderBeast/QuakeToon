@@ -23,6 +23,7 @@
 #include <assert.h>
 
 #include "r_local.h"
+#include <ctype.h>
 
 static vec3_t modelorg;                 // relative to viewpoint
 
@@ -984,7 +985,7 @@ qboolean R_SurfsAreBatchable(msurface_t *s1, msurface_t *s2)
     {
         return false;
     }
-    if ((s1->texinfo->flags & SURF_TRANS33 | SURF_TRANS66 != 0) != (s2->texinfo->flags & SURF_TRANS33 | SURF_TRANS66 != 0))
+    if (((s1->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) != 0) != ((s2->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) != 0))
     {
         return false;
     }

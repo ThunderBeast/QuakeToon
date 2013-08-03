@@ -29,7 +29,7 @@
 #  include <windows.h>
 #endif
 
-#include <GL/gl.h>
+#include <OpenGL/gl.h>
 
 #ifdef __linux__
 //#include <GL/fxmesa.h>
@@ -505,6 +505,9 @@ void Fake_glColorTableEXT(GLenum target, GLenum internalformat,
                           GLsizei width, GLenum format, GLenum type,
                           const GLvoid *table);
 #endif // linux
+
+// fix me
+extern void *qwglGetProcAddress(char *symbol);
 
 /*
 ** extension constants

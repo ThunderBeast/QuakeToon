@@ -20,6 +20,7 @@
 
 // r_main.c
 
+#include <ctype.h>
 #include "r_local.h"
 #include "vlights.h"
 
@@ -189,6 +190,16 @@ cvar_t *r_bloom;        // BLOOMS
 cvar_t *r_skydistance;  //Knightmare- variable sky range
 cvar_t *r_saturation;   //** DMP
 
+
+// move me, this is for mac
+static char* strlwr(char *str)
+{
+  char *s;
+
+  for(s = str; *s; s++)
+    *s = tolower((unsigned char)*s);
+  return str;
+}
 
 /*
  * =================
@@ -1164,7 +1175,7 @@ qboolean R_SetMode(void)
     vid_fullscreen->modified = false;
     r_mode->modified         = false;
 
-    if ((err = GLimp_SetMode(&vid.width, &vid.height, r_mode->value, fullscreen)) == rserr_ok)
+    if ((err = GLimp_SetMode((int *)&vid.width, (int *)&vid.height, r_mode->value, fullscreen)) == rserr_ok)
     {
         glState.prev_mode = r_mode->value;
     }
@@ -1175,7 +1186,7 @@ qboolean R_SetMode(void)
             Cvar_SetValue("vid_fullscreen", 0);
             vid_fullscreen->modified = false;
             VID_Printf(PRINT_ALL, "ref_gl::R_SetMode() - fullscreen unavailable in this mode\n");
-            if ((err = GLimp_SetMode(&vid.width, &vid.height, r_mode->value, false)) == rserr_ok)
+            if ((err = GLimp_SetMode((int*)&vid.width, (int*)&vid.height, r_mode->value, false)) == rserr_ok)
             {
                 return true;
             }
@@ -1188,7 +1199,7 @@ qboolean R_SetMode(void)
         }
 
         // try setting it back to something safe
-        if ((err = GLimp_SetMode(&vid.width, &vid.height, glState.prev_mode, false)) != rserr_ok)
+        if ((err = GLimp_SetMode((int *)&vid.width, (int *)&vid.height, glState.prev_mode, false)) != rserr_ok)
         {
             VID_Printf(PRINT_ALL, "ref_gl::R_SetMode() - could not revert to safe mode\n");
             return false;
@@ -1264,11 +1275,11 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
     //
     // get our various GL strings
     //
-    glConfig.vendor_string = qglGetString(GL_VENDOR);
+    glConfig.vendor_string = (const char *)qglGetString(GL_VENDOR);
     VID_Printf(PRINT_ALL, "GL_VENDOR: %s\n", glConfig.vendor_string);
-    glConfig.renderer_string = qglGetString(GL_RENDERER);
+    glConfig.renderer_string = (const char *) qglGetString(GL_RENDERER);
     VID_Printf(PRINT_ALL, "GL_RENDERER: %s\n", glConfig.renderer_string);
-    glConfig.version_string = qglGetString(GL_VERSION);
+    glConfig.version_string = (const char *) qglGetString(GL_VERSION);
     sscanf(glConfig.version_string, "%d.%d.%d", &glConfig.version_major, &glConfig.version_minor, &glConfig.version_release);
     VID_Printf(PRINT_ALL, "GL_VERSION: %s\n", glConfig.version_string);
 
@@ -1276,7 +1287,7 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
     qglGetIntegerv(GL_MAX_TEXTURE_SIZE, &glConfig.max_texsize);
     VID_Printf(PRINT_DEVELOPER, "GL_MAX_TEXTURE_SIZE: %i\n", glConfig.max_texsize);
 
-    glConfig.extensions_string = qglGetString(GL_EXTENSIONS);
+    glConfig.extensions_string = (const char *) qglGetString(GL_EXTENSIONS);
 //	VID_Printf (PRINT_DEVELOPER, "GL_EXTENSIONS: %s\n", glConfig.extensions_string );
     if (developer->value > 0)           // print extensions 2 to a line
     {
@@ -1467,8 +1478,9 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
     {
         if (r_ext_compiled_vertex_array->value)
         {
-            qglLockArraysEXT   = (void *)qwglGetProcAddress("glLockArraysEXT");
-            qglUnlockArraysEXT = (void *)qwglGetProcAddress("glUnlockArraysEXT");
+            qglLockArraysEXT   = (void *) qwglGetProcAddress("glLockArraysEXT");
+            qglUnlockArraysEXT = (void *) qwglGetProcAddress("glUnlockArraysEXT");
+            
             if (!qglLockArraysEXT || !qglUnlockArraysEXT)
             {
                 VID_Printf(PRINT_ALL, "..." S_COLOR_RED "GL_EXT/SGI_compiled_vertex_array not properly supported!\n");
@@ -1908,25 +1920,6 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
         VID_Printf(PRINT_ALL, "...GL_ARB_texture_compression not found\n");
         glState.texture_compression = false;
         Cvar_Set("r_ext_texture_compression", "0");
-    }
-
-    // WGL_3DFX_gamma_control
-    if (strstr(glConfig.extensions_string, "WGL_3DFX_gamma_control"))
-    {
-        if (!r_ignorehwgamma->value)
-        {
-            qwglGetDeviceGammaRamp3DFX = (BOOL(WINAPI *)(HDC, WORD *))qwglGetProcAddress("wglGetDeviceGammaRamp3DFX");
-            qwglSetDeviceGammaRamp3DFX = (BOOL(WINAPI *)(HDC, WORD *))qwglGetProcAddress("wglSetDeviceGammaRamp3DFX");
-            VID_Printf(PRINT_ALL, "...using WGL_3DFX_gamma_control\n");
-        }
-        else
-        {
-            VID_Printf(PRINT_ALL, "...ignoring WGL_3DFX_gamma_control\n");
-        }
-    }
-    else
-    {
-        VID_Printf(PRINT_ALL, "...WGL_3DFX_gamma_control not found\n");
     }
 
 /*

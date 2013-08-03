@@ -24,9 +24,9 @@
 
 #include <stdio.h>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "glext.h" //Knightmare- MrG's shader waterwarp support
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+//#include "glext.h" //Knightmare- MrG's shader waterwarp support
 #include <math.h>
 
 #ifndef __linux__
@@ -34,6 +34,16 @@
 #define GL_COLOR_INDEX8_EXT    GL_COLOR_INDEX
 #endif
 #endif
+
+  //QUAKETOON: look into GLEW
+ #define GL_TEXTURE_SHADER_NV 0x86DE
+ #define GL_SHADER_OPERATION_NV 0x86DF
+ #define GL_DSDT_NV 0x86F5
+ #define GL_DSDT8_NV 0x8709
+ #define GL_OFFSET_TEXTURE_2D_NV 0x86E8
+ #define GL_PREVIOUS_TEXTURE_INPUT_NV 0x86E4
+ #define GL_OFFSET_TEXTURE_MATRIX_NV 0x86E1
+
 
 #include "../client/ref.h"
 
@@ -343,14 +353,13 @@ extern int c_visible_textures;
 extern float r_world_matrix[16];
 
 // entity sorting struct
-typedef struct sortedelement_s   sortedelement_t;
-typedef struct                   sortedelement_s
+typedef struct sortedelement_s                 
 {
     void            *data;
     vec_t           len;
     vec3_t          org;
-    sortedelement_t *left, *right;
-};
+    struct sortedelement_s *left, *right;
+} sortedelement_t;
 
 
 //
@@ -432,10 +441,11 @@ typedef struct
     rect_t     lightrect[MAX_LIGHTMAPS];
     qboolean   modified[MAX_LIGHTMAPS];
 #endif // BATCH_LM_UPDATES
+
 } gllightmapstate_t;
 
-extern gllightmapstate_t gl_lms;
 
+extern gllightmapstate_t gl_lms;
 
 //void R_LightPoint (vec3_t p, vec3_t color);
 void R_LightPoint(vec3_t p, vec3_t color, qboolean isEnt);

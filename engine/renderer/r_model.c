@@ -258,7 +258,7 @@ model_t *Mod_ForName(char *name, qboolean crash)
     //
     // load the file
     //
-    modfilelen = FS_LoadFile(mod->name, &buf);
+    modfilelen = FS_LoadFile(mod->name, (void **) &buf);
     if (!buf)
     {
         if (crash)
@@ -510,7 +510,7 @@ void Mod_InitFailedTexList(void)
 
     for (i = 0; i < NUM_FAIL_TEXTURES; i++)
     {
-        sprintf(lastFailedTexture[i], "\0");
+        lastFailedTexture[i][0] = 0;
     }
 
     failedTexListIndex = 0;
@@ -608,7 +608,7 @@ void Mod_InitWalSizeList(void)
 
     for (i = 0; i < NUM_WALSIZES; i++)
     {
-        sprintf(walSizeList[i].name, "\0");
+        walSizeList[i].name[0] = 0;
         walSizeList[i].width  = 0;
         walSizeList[i].height = 0;
     }
@@ -1836,7 +1836,7 @@ void Mod_LoadModelScript(model_t *mod, maliasmodel_t *aliasmod)
 
     COM_StripExtension(mod->name, scriptname);
     strcat(scriptname, ".script");
-    buf_size = FS_LoadFile(scriptname, &buf);
+    buf_size = FS_LoadFile(scriptname, (void **) &buf);
 
     if (buf_size < 1)
     {
@@ -2437,7 +2437,7 @@ void Mod_LoadAliasMD2ModelNew(model_t *mod, void *buffer)
         poutmesh->num_skins = 1;
         sprintf(name, "players/male/grunt.pcx");
         memcpy(poutskin->name, name, MD3_MAX_PATH);
-        sprintf(poutskin->glowname, "\0");         // set null glowskin
+        poutskin->glowname[0] = 0; // set null glowskin
         mod->skins[0][0] = R_FindImage(name, it_skin);
     }
     else
@@ -2447,7 +2447,7 @@ void Mod_LoadAliasMD2ModelNew(model_t *mod, void *buffer)
         {
             memcpy(name, ((char *)pinmodel + LittleLong(pinmodel->ofs_skins) + i * MAX_SKINNAME), MD3_MAX_PATH);
             memcpy(poutskin->name, name, MD3_MAX_PATH);
-            sprintf(poutskin->glowname, "\0");             // set null glowskin
+            poutskin->glowname[0] = 0; // set null glowskin
             mod->skins[0][i] = R_FindImage(name, it_skin);
         }
     }
@@ -2656,7 +2656,7 @@ void Mod_LoadAliasMD3Model(model_t *mod, void *buffer)
                 name[0] = 'p';
             }
             memcpy(poutskin->name, name, MD3_MAX_PATH);
-            sprintf(poutskin->glowname, "\0");             // set null glowskin
+            poutskin->glowname[0] = 0; // set null glowskin
             mod->skins[i][j] = R_FindImage(name, it_skin);
         }
 

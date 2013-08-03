@@ -281,7 +281,8 @@ void CreateDSTTex_ARB(void)
     unsigned char dist[DST_SIZE][DST_SIZE][4];
     int           x, y;
 
-    srand(GetTickCount());
+    //QUAKETOON: replace with SDL
+    srand(0);//GetTickCount());
     for (x = 0; x < DST_SIZE; x++)
     {
         for (y = 0; y < DST_SIZE; y++)

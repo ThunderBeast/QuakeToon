@@ -31,10 +31,10 @@
 
 vec3_t vlightgrid[VLIGHT_GRIDSIZE_X][VLIGHT_GRIDSIZE_Y];
 
-static vec3_t r_avertexnormals[NUMVERTEXNORMALS] =
-{
-#include "anorms.h"
-};
+//static vec3_t r_avertexnormals[NUMVERTEXNORMALS] =
+//{
+//#include "anorms.h"
+//};
 
 void VLight_InitAnormTable(void)
 {
