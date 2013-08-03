@@ -14,7 +14,7 @@ file ( GLOB RENDERER_FILES renderer/*.c )
 set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${GAME_FILES} ${UI_FILES} ${CLIENT_FILES} ${RENDERER_FILES} )
 
 add_executable(QuakeToon ${SOURCE_FILES})
-set (CMAKE_EXE_LINKER_FLAGS "-framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")
+set (CMAKE_EXE_LINKER_FLAGS "-lz -framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")
 
-#target_link_libraries(QuakeToon unzip SDL STB -lz)
+target_link_libraries(QuakeToon vendor )
 

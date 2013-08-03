@@ -13,5 +13,5 @@ set(CMAKE_OSX_ARCHITECTURES "i386")
 #include_directories (vendor/unzip)
 
 # Add targets
-#add_subdirectory (vendor)
+add_subdirectory (vendor)
 add_subdirectory (engine)
