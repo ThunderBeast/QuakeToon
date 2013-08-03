@@ -209,7 +209,7 @@ void GLimp_BeginFrame( float camera_seperation )
 */
 void GLimp_EndFrame (void)
 {
-	qglFlush();
+	glFlush();
 	qfxMesaSwapBuffers();
 }
 
@@ -234,7 +234,7 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 		temptable[i][0] = *intbl++;
 		temptable[i][3] = 255;
 	}
-	qglEnable( GL_SHARED_TEXTURE_PALETTE_EXT );
-	qgl3DfxSetPaletteEXT((GLuint *)temptable);
+	glEnable( GL_SHARED_TEXTURE_PALETTE_EXT );
+	gl3DfxSetPaletteEXT((GLuint *)temptable);
 }
 

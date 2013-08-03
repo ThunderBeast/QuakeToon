@@ -110,7 +110,7 @@ void GL_Enable(GLenum cap)
         }
         glState.scissorTest = true;
     }
-    qglEnable(cap);
+    glEnable(cap);
 }
 
 
@@ -202,7 +202,7 @@ void GL_Disable(GLenum cap)
         }
         glState.scissorTest = false;
     }
-    qglDisable(cap);
+    glDisable(cap);
 }
 
 
@@ -224,24 +224,24 @@ void GL_Stencil(qboolean enable, qboolean shell)
     {
         if (shell || (r_shadows->value == 3))
         {
-            qglPushAttrib(GL_STENCIL_BUFFER_BIT);
+            glPushAttrib(GL_STENCIL_BUFFER_BIT);
             if (r_shadows->value == 3)
             {
-                qglClearStencil(1);
+                glClearStencil(1);
             }
-            qglClear(GL_STENCIL_BUFFER_BIT);
+            glClear(GL_STENCIL_BUFFER_BIT);
         }
 
         GL_Enable(GL_STENCIL_TEST);
-        qglStencilFunc(GL_EQUAL, 1, 2);
-        qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+        glStencilFunc(GL_EQUAL, 1, 2);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
     }
     else
     {
         GL_Disable(GL_STENCIL_TEST);
         if (shell || (r_shadows->value == 3))
         {
-            qglPopAttrib();
+            glPopAttrib();
         }
     }
 }
@@ -270,13 +270,13 @@ void R_ParticleStencil(int passnum)
 
     if (passnum == 1)                         // write area of trans surfaces to stencil buffer
     {
-        qglPushAttrib(GL_STENCIL_BUFFER_BIT); // save stencil buffer
-        qglClearStencil(1);
-        qglClear(GL_STENCIL_BUFFER_BIT);
+        glPushAttrib(GL_STENCIL_BUFFER_BIT); // save stencil buffer
+        glClearStencil(1);
+        glClear(GL_STENCIL_BUFFER_BIT);
 
         GL_Enable(GL_STENCIL_TEST);
-        qglStencilFunc(GL_ALWAYS, 1, 0xFF);
-        qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
     }
     else if (passnum == 2)     // turn off writing
     {
@@ -285,13 +285,13 @@ void R_ParticleStencil(int passnum)
     else if (passnum == 3)     // enable drawing only to affected area
     {
         GL_Enable(GL_STENCIL_TEST);
-        qglStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-        qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+        glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     }
     else if (passnum == 4)     // turn off and restore
     {
         GL_Disable(GL_STENCIL_TEST);
-        qglPopAttrib();         // restore stencil buffer
+        glPopAttrib();         // restore stencil buffer
     }
 }
 
@@ -302,14 +302,14 @@ void R_ParticleStencil(int passnum)
  * setting up envmap
  * =================
  */
-#define GLSTATE_DISABLE_TEXGEN    if (glState.texgen) { qglDisable(GL_TEXTURE_GEN_S); qglDisable(GL_TEXTURE_GEN_T); qglDisable(GL_TEXTURE_GEN_R); glState.texgen = false; }
-#define GLSTATE_ENABLE_TEXGEN     if (!glState.texgen) { qglEnable(GL_TEXTURE_GEN_S); qglEnable(GL_TEXTURE_GEN_T); qglEnable(GL_TEXTURE_GEN_R); glState.texgen = true; }
+#define GLSTATE_DISABLE_TEXGEN    if (glState.texgen) { glDisable(GL_TEXTURE_GEN_S); glDisable(GL_TEXTURE_GEN_T); glDisable(GL_TEXTURE_GEN_R); glState.texgen = false; }
+#define GLSTATE_ENABLE_TEXGEN     if (!glState.texgen) { glEnable(GL_TEXTURE_GEN_S); glEnable(GL_TEXTURE_GEN_T); glEnable(GL_TEXTURE_GEN_R); glState.texgen = true; }
 void GL_Envmap(qboolean enable)
 {
     if (enable)
     {
-        qglTexGenf(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-        qglTexGenf(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+        glTexGenf(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+        glTexGenf(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
         GLSTATE_ENABLE_TEXGEN
     }
     else
@@ -331,7 +331,7 @@ void GL_ShadeModel(GLenum mode)
         return;
     }
     glState.shadeModelMode = mode;
-    qglShadeModel(mode);
+    glShadeModel(mode);
 }
 
 
@@ -346,7 +346,7 @@ void GL_TexEnv(GLenum mode)
 
     if (mode != lastmodes[glState.currenttmu])
     {
-        qglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
+        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, mode);
         lastmodes[glState.currenttmu] = mode;
     }
 }
@@ -364,7 +364,7 @@ void GL_CullFace(GLenum mode)
         return;
     }
     glState.cullMode = mode;
-    qglCullFace(mode);
+    glCullFace(mode);
 }
 
 
@@ -381,7 +381,7 @@ void GL_PolygonOffset(GLfloat factor, GLfloat units)
     }
     glState.offsetFactor = factor;
     glState.offsetUnits  = units;
-    qglPolygonOffset(factor, units);
+    glPolygonOffset(factor, units);
 }
 
 
@@ -398,7 +398,7 @@ void GL_AlphaFunc(GLenum func, GLclampf ref)
     }
     glState.alphaFunc = func;
     glState.alphaRef  = ref;
-    qglAlphaFunc(func, ref);
+    glAlphaFunc(func, ref);
 }
 
 
@@ -415,7 +415,7 @@ void GL_BlendFunc(GLenum src, GLenum dst)
     }
     glState.blendSrc = src;
     glState.blendDst = dst;
-    qglBlendFunc(src, dst);
+    glBlendFunc(src, dst);
 }
 
 
@@ -431,7 +431,7 @@ void GL_DepthFunc(GLenum func)
         return;
     }
     glState.depthFunc = func;
-    qglDepthFunc(func);
+    glDepthFunc(func);
 }
 
 
@@ -447,7 +447,7 @@ void GL_DepthMask(GLboolean mask)
         return;
     }
     glState.depthMask = mask;
-    qglDepthMask(mask);
+    glDepthMask(mask);
 }
 
 
@@ -464,7 +464,7 @@ void GL_DepthRange(GLfloat rMin, GLfloat rMax)
     }
     glState.depthMin = rMin;
     glState.depthMax = rMax;
-    qglDepthRange(rMin, rMax);
+    glDepthRange(rMin, rMax);
 }
 
 
@@ -484,7 +484,7 @@ void GL_LockArrays(int numVerts)
         return;
     }
 
-    qglLockArraysEXT(0, numVerts);
+    glLockArraysEXT(0, numVerts);
     glState.arraysLocked = true;
 }
 
@@ -505,7 +505,7 @@ void GL_UnlockArrays(void)
         return;
     }
 
-    qglUnlockArraysEXT();
+    glUnlockArraysEXT();
     glState.arraysLocked = false;
 }
 
@@ -528,9 +528,9 @@ void GL_EnableTexture(unsigned tmu)
     }
 
     GL_SelectTexture(tmu);
-    qglEnable(GL_TEXTURE_2D);
-    qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    qglTexCoordPointer(2, GL_FLOAT, sizeof(texCoordArray[tmu][0]), texCoordArray[tmu][0]);
+    glEnable(GL_TEXTURE_2D);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glTexCoordPointer(2, GL_FLOAT, sizeof(texCoordArray[tmu][0]), texCoordArray[tmu][0]);
     glState.activetmu[tmu] = true;
 }
 
@@ -553,8 +553,8 @@ void GL_DisableTexture(unsigned tmu)
     }
 
     GL_SelectTexture(tmu);
-    qglDisable(GL_TEXTURE_2D);
-    qglDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisable(GL_TEXTURE_2D);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glState.activetmu[tmu] = false;
 }
 
@@ -611,8 +611,8 @@ void GL_SelectTexture(unsigned tmu)
 
     glState.currenttmu = tmu;
 
-    qglActiveTextureARB(GL_TEXTURE0_ARB + tmu);
-    qglClientActiveTextureARB(GL_TEXTURE0_ARB + tmu);
+    glActiveTextureARB(GL_TEXTURE0_ARB + tmu);
+    glClientActiveTextureARB(GL_TEXTURE0_ARB + tmu);
 }
 
 
@@ -635,7 +635,7 @@ void GL_Bind(int texnum)
     }
 
     glState.currenttextures[glState.currenttmu] = texnum;
-    qglBindTexture(GL_TEXTURE_2D, texnum);
+    glBindTexture(GL_TEXTURE_2D, texnum);
 }
 
 
@@ -699,52 +699,52 @@ void GL_SetDefaultState(void)
     glState.depthMask      = GL_TRUE;
 
     // Set default state
-    qglDisable(GL_TEXTURE_GEN_S);
-    qglDisable(GL_TEXTURE_GEN_T);
-    qglDisable(GL_TEXTURE_GEN_R);
-    qglEnable(GL_TEXTURE_2D);
-    qglDisable(GL_CULL_FACE);
-    qglDisable(GL_POLYGON_OFFSET_FILL);
-    qglDisable(GL_ALPHA_TEST);
-    qglDisable(GL_BLEND);
-    qglDisable(GL_STENCIL_TEST);
-    qglDisable(GL_DEPTH_TEST);
-    qglDisable(GL_SCISSOR_TEST);
+    glDisable(GL_TEXTURE_GEN_S);
+    glDisable(GL_TEXTURE_GEN_T);
+    glDisable(GL_TEXTURE_GEN_R);
+    glEnable(GL_TEXTURE_2D);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_ALPHA_TEST);
+    glDisable(GL_BLEND);
+    glDisable(GL_STENCIL_TEST);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_SCISSOR_TEST);
 
-    qglCullFace(GL_FRONT);
-    qglShadeModel(GL_FLAT);
-    qglPolygonOffset(-1, -2);
-    qglAlphaFunc(GL_GREATER, 0.666);
-    qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    qglDepthFunc(GL_LEQUAL);
-    qglDepthMask(GL_TRUE);
+    glCullFace(GL_FRONT);
+    glShadeModel(GL_FLAT);
+    glPolygonOffset(-1, -2);
+    glAlphaFunc(GL_GREATER, 0.666);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDepthFunc(GL_LEQUAL);
+    glDepthMask(GL_TRUE);
 
-    qglClearColor(1, 0, 0.5, 0.5);
-    qglClearDepth(1.0);
-    qglClearStencil(128);
+    glClearColor(1, 0, 0.5, 0.5);
+    glClearDepth(1.0);
+    glClearStencil(128);
 
-    qglColor4f(1, 1, 1, 1);
+    glColor4f(1, 1, 1, 1);
 
-    qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
     GL_TextureMode(r_texturemode->string);
     GL_TextureAlphaMode(r_texturealphamode->string);
     GL_TextureSolidMode(r_texturesolidmode->string);
 
-    qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
-    qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, gl_filter_min);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, gl_filter_max);
 
-    qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     // Vertex arrays
-    qglEnableClientState(GL_TEXTURE_COORD_ARRAY);
-    qglEnableClientState(GL_VERTEX_ARRAY);
-    qglEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
 
-    qglTexCoordPointer(2, GL_FLOAT, sizeof(texCoordArray[0][0]), texCoordArray[0][0]);
-    qglVertexPointer(3, GL_FLOAT, sizeof(vertexArray[0]), vertexArray[0]);
-    qglColorPointer(4, GL_FLOAT, sizeof(colorArray[0]), colorArray[0]);
+    glTexCoordPointer(2, GL_FLOAT, sizeof(texCoordArray[0][0]), texCoordArray[0][0]);
+    glVertexPointer(3, GL_FLOAT, sizeof(vertexArray[0]), vertexArray[0]);
+    glColorPointer(4, GL_FLOAT, sizeof(colorArray[0]), colorArray[0]);
     // end vertex arrays
 
     glState.activetmu[0] = true;

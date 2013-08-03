@@ -545,7 +545,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 		vidmode_ext = true;
 	}
 
-	visinfo = qglXChooseVisual(dpy, scrnum, attrib);
+	visinfo = glXChooseVisual(dpy, scrnum, attrib);
 	if (!visinfo) {
 		fprintf(stderr, "Error couldn't get an RGB, Double-buffered, Depth visual\n");
 		return rserr_invalid_mode;
@@ -675,9 +675,9 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 
 	XFlush(dpy);
 
-	ctx = qglXCreateContext(dpy, visinfo, NULL, True);
+	ctx = glXCreateContext(dpy, visinfo, NULL, True);
 
-	qglXMakeCurrent(dpy, win, ctx);
+	glXMakeCurrent(dpy, win, ctx);
 
 	*pwidth = width;
 	*pheight = height;
@@ -685,16 +685,16 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	// let the sound and input subsystems know about the new window
 	VID_NewWindow (width, height);
 
-	qglXMakeCurrent(dpy, win, ctx);
+	glXMakeCurrent(dpy, win, ctx);
 
 /*	Moved to GL_SetDefaultState in r_glstate.c
    // Vertex arrays
-   qglEnableClientState (GL_VERTEX_ARRAY);
-   qglEnableClientState (GL_TEXTURE_COORD_ARRAY);
+   glEnableClientState (GL_VERTEX_ARRAY);
+   glEnableClientState (GL_TEXTURE_COORD_ARRAY);
 
-   qglTexCoordPointer (2, GL_FLOAT, sizeof(tex_array[0]), tex_array[0]);
-   qglVertexPointer (3, GL_FLOAT, sizeof(vert_array[0]), vert_array[0]);
-   qglColorPointer (4, GL_FLOAT, sizeof(col_array[0]), col_array[0]);
+   glTexCoordPointer (2, GL_FLOAT, sizeof(tex_array[0]), tex_array[0]);
+   glVertexPointer (3, GL_FLOAT, sizeof(vert_array[0]), vert_array[0]);
+   glColorPointer (4, GL_FLOAT, sizeof(col_array[0]), col_array[0]);
 */
 
 	return rserr_ok;
@@ -718,7 +718,7 @@ void GLimp_Shutdown( void )
 
 	if (dpy) {
 		if (ctx)
-			qglXDestroyContext(dpy, ctx);
+			glXDestroyContext(dpy, ctx);
 		if (win)
 			XDestroyWindow(dpy, win);
 		if (gl_state.gammaramp) {
@@ -772,8 +772,8 @@ void GLimp_BeginFrame( float camera_seperation )
 */
 void GLimp_EndFrame (void)
 {
-	qglFlush();
-	qglXSwapBuffers(dpy, win);
+	glFlush();
+	glXSwapBuffers(dpy, win);
 }
 
 /*
@@ -797,7 +797,7 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 		temptable[i][0] = *intbl++;
 		temptable[i][3] = 255;
 	}
-	qgl3DfxSetPaletteEXT((GLuint *)temptable);
+	gl3DfxSetPaletteEXT((GLuint *)temptable);
 }
 
 /*

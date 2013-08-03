@@ -269,8 +269,8 @@ void RB_RenderAliasMesh(maliasmodel_t *paliashdr, unsigned meshnum, unsigned ski
         {
             glowcolor = 1.0;
         }
-        qglDisableClientState(GL_COLOR_ARRAY);
-        qglColor4f(glowcolor, glowcolor, glowcolor, 1.0);
+        glDisableClientState(GL_COLOR_ARRAY);
+        glColor4f(glowcolor, glowcolor, glowcolor, 1.0);
 
         GL_Enable(GL_BLEND);
         GL_BlendFunc(GL_ONE, GL_ONE);
@@ -279,8 +279,8 @@ void RB_RenderAliasMesh(maliasmodel_t *paliashdr, unsigned meshnum, unsigned ski
 
         RB_DrawArrays();
 
-        qglColor4f(1.0, 1.0, 1.0, 1.0);
-        qglEnableClientState(GL_COLOR_ARRAY);
+        glColor4f(1.0, 1.0, 1.0, 1.0);
+        glEnableClientState(GL_COLOR_ARRAY);
     }
 
     // envmap pass
@@ -289,8 +289,8 @@ void RB_RenderAliasMesh(maliasmodel_t *paliashdr, unsigned meshnum, unsigned ski
         GL_Enable(GL_BLEND);
         GL_BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        qglTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
-        qglTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+        glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
+        glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
         // apply alpha to array
         for (i = 0; i < rb_vertex; i++)
         {
@@ -299,13 +299,13 @@ void RB_RenderAliasMesh(maliasmodel_t *paliashdr, unsigned meshnum, unsigned ski
 
         GL_Bind(glMedia.envmappic->texnum);
 
-        qglEnable(GL_TEXTURE_GEN_S);
-        qglEnable(GL_TEXTURE_GEN_T);
+        glEnable(GL_TEXTURE_GEN_S);
+        glEnable(GL_TEXTURE_GEN_T);
 
         RB_DrawArrays();
 
-        qglDisable(GL_TEXTURE_GEN_S);
-        qglDisable(GL_TEXTURE_GEN_T);
+        glDisable(GL_TEXTURE_GEN_S);
+        glDisable(GL_TEXTURE_GEN_T);
     }
 
     RB_DrawMeshTris();
@@ -736,11 +736,11 @@ void R_DrawShadowVolume(void)
 {
     if (glConfig.drawRangeElements)
     {
-        qglDrawRangeElementsEXT(GL_TRIANGLES, 0, shadow_va, shadow_index, GL_UNSIGNED_INT, indexArray);
+        glDrawRangeElementsEXT(GL_TRIANGLES, 0, shadow_va, shadow_index, GL_UNSIGNED_INT, indexArray);
     }
     else
     {
-        qglDrawElements(GL_TRIANGLES, shadow_index, GL_UNSIGNED_INT, indexArray);
+        glDrawElements(GL_TRIANGLES, shadow_index, GL_UNSIGNED_INT, indexArray);
     }
 }
 
@@ -836,17 +836,17 @@ void R_DrawAliasVolumeShadow(maliasmodel_t *paliashdr, vec3_t bbox[8])
          * else
          * {	incr = GL_INCR;				decr = GL_DECR;	}*/
 
-        qglPushAttrib(GL_STENCIL_BUFFER_BIT);         // save stencil buffer
-        qglClear(GL_STENCIL_BUFFER_BIT);
+        glPushAttrib(GL_STENCIL_BUFFER_BIT);         // save stencil buffer
+        glClear(GL_STENCIL_BUFFER_BIT);
 
-        qglColorMask(0, 0, 0, 0);
+        glColorMask(0, 0, 0, 0);
         GL_DepthMask(0);
         GL_DepthFunc(GL_LESS);
 
         GL_Enable(GL_STENCIL_TEST);
-        qglStencilFunc(GL_ALWAYS, 0, 255);
-        //	qglStencilOp (GL_KEEP, GL_KEEP, GL_KEEP);
-        //	qglStencilMask (255);
+        glStencilFunc(GL_ALWAYS, 0, 255);
+        //	glStencilOp (GL_KEEP, GL_KEEP, GL_KEEP);
+        //	glStencilMask (255);
     }
 
     // build shadow volumes and render each to stencil buffer
@@ -867,8 +867,8 @@ void R_DrawAliasVolumeShadow(maliasmodel_t *paliashdr, vec3_t bbox[8])
             {
                 GL_Disable(GL_CULL_FACE);
 
-                qglStencilOpSeparateATI(GL_BACK, GL_KEEP, GL_INCR_WRAP_EXT, GL_KEEP);
-                qglStencilOpSeparateATI(GL_FRONT, GL_KEEP, GL_DECR_WRAP_EXT, GL_KEEP);
+                glStencilOpSeparateATI(GL_BACK, GL_KEEP, GL_INCR_WRAP_EXT, GL_KEEP);
+                glStencilOpSeparateATI(GL_FRONT, GL_KEEP, GL_DECR_WRAP_EXT, GL_KEEP);
 
                 R_DrawShadowVolume();
 
@@ -877,27 +877,27 @@ void R_DrawAliasVolumeShadow(maliasmodel_t *paliashdr, vec3_t bbox[8])
             else if (glConfig.extStencilTwoSide && glConfig.extStencilWrap)             // Echon's two-sided stenciling
             {
                 GL_Disable(GL_CULL_FACE);
-                qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
+                glEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
-                qglActiveStencilFaceEXT(GL_BACK);
-                qglStencilOp(GL_KEEP, GL_INCR_WRAP_EXT, GL_KEEP);
-                qglActiveStencilFaceEXT(GL_FRONT);
-                qglStencilOp(GL_KEEP, GL_DECR_WRAP_EXT, GL_KEEP);
+                glActiveStencilFaceEXT(GL_BACK);
+                glStencilOp(GL_KEEP, GL_INCR_WRAP_EXT, GL_KEEP);
+                glActiveStencilFaceEXT(GL_FRONT);
+                glStencilOp(GL_KEEP, GL_DECR_WRAP_EXT, GL_KEEP);
 
                 R_DrawShadowVolume();
 
-                qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
+                glDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
                 GL_Enable(GL_CULL_FACE);
             }
             else
             {                         // increment stencil if backface is behind depthbuffer
                 GL_CullFace(GL_BACK); // quake is backwards, this culls front faces
-                qglStencilOp(GL_KEEP, GL_INCR, GL_KEEP);
+                glStencilOp(GL_KEEP, GL_INCR, GL_KEEP);
                 R_DrawShadowVolume();
 
                 // decrement stencil if frontface is behind depthbuffer
                 GL_CullFace(GL_FRONT);                 // quake is backwards, this culls back faces
-                qglStencilOp(GL_KEEP, GL_DECR, GL_KEEP);
+                glStencilOp(GL_KEEP, GL_DECR, GL_KEEP);
                 R_DrawShadowVolume();
             }
         }
@@ -917,11 +917,11 @@ void R_DrawAliasVolumeShadow(maliasmodel_t *paliashdr, vec3_t bbox[8])
 
         GL_DepthFunc(GL_LEQUAL);
         GL_DepthMask(1);
-        qglColorMask(1, 1, 1, 1);
+        glColorMask(1, 1, 1, 1);
 
         // draw shadows for this model now
         R_ShadowBlend(aliasShadowAlpha * currententity->alpha); // was r_shadowalpha->value
-        qglPopAttrib();                                         // restore stencil buffer
+        glPopAttrib();                                         // restore stencil buffer
     }
 }
 
@@ -1172,7 +1172,7 @@ void R_DrawAliasModel(entity_t *e)
         c_alias_polys += paliashdr->meshes[i].num_tris;
     }
 
-    qglPushMatrix();
+    glPushMatrix();
     e->angles[ROLL] = e->angles[ROLL] * R_RollMult();                   // roll is backwards
     R_RotateForEntity(e, true);
     e->angles[ROLL] = e->angles[ROLL] * R_RollMult();                   // roll is backwards
@@ -1199,7 +1199,7 @@ void R_DrawAliasModel(entity_t *e)
 
     R_DrawAliasMeshes(paliashdr, e);
 
-    qglPopMatrix();
+    glPopMatrix();
 
     // mirroring support
     if (mirrormodel)
@@ -1222,7 +1222,7 @@ void R_DrawAliasModel(entity_t *e)
         && !((e->flags & RF_MASK_SHELL) && (e->flags & RF_TRANSLUCENT)) &&
         (r_shadows->value >= 1) && (aliasShadowAlpha >= DIV255))
     {
-        qglPushMatrix();
+        glPushMatrix();
         GL_DisableTexture(0);
         GL_Enable(GL_BLEND);
 
@@ -1241,7 +1241,7 @@ void R_DrawAliasModel(entity_t *e)
 
         GL_Disable(GL_BLEND);
         GL_EnableTexture(0);
-        qglPopMatrix();
+        glPopMatrix();
     }
 }
 
@@ -1322,7 +1322,7 @@ void R_DrawAliasModelShadow(entity_t *e)
     //if ( !r_lerpmodels->value )
     //	e->backlerp = 0;
 
-    qglPushMatrix();
+    glPushMatrix();
     GL_DisableTexture(0);
     GL_Enable(GL_BLEND);
 
@@ -1341,7 +1341,7 @@ void R_DrawAliasModelShadow(entity_t *e)
 
     GL_Disable(GL_BLEND);
     GL_EnableTexture(0);
-    qglPopMatrix();
+    glPopMatrix();
 
     // mirroring support
 //	if (mirrormodel)

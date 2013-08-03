@@ -291,7 +291,7 @@ QUAKE2_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_glx.o \
 	$(BUILDDIR)/ref_gl/r_warp.o \
 	\
-	$(BUILDDIR)/ref_gl/qgl_unix.o
+	$(BUILDDIR)/ref_gl/gl_unix.o
 	
 QUAKE2_AS_OBJS = \
 	$(BUILDDIR)/client/snd_mixa.o
@@ -631,7 +631,7 @@ $(BUILDDIR)/ref_gl/r_warp.o :        	$(REF_GL_DIR)/r_warp.c
 $(BUILDDIR)/ref_gl/gl_glx.o :      	$(UNIX_DIR)/gl_glx.c
 	$(DO_GL_SHLIB_CC) $(GLXCFLAGS)
 
-$(BUILDDIR)/ref_gl/qgl_unix.o :      	$(UNIX_DIR)/qgl_unix.c
+$(BUILDDIR)/ref_gl/gl_unix.o :      	$(UNIX_DIR)/gl_unix.c
 	$(DO_GL_SHLIB_CC)
 
 #############################################################################

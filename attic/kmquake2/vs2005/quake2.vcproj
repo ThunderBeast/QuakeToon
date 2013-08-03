@@ -2278,7 +2278,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="win32\qgl_win.c"
+					RelativePath="win32\gl_win.c"
 					>
 					<FileConfiguration
 						Name="Debug Alpha|Win32"
@@ -3920,7 +3920,7 @@
 				>
 			</File>
 			<File
-				RelativePath="renderer\qgl.h"
+				RelativePath="renderer\gl.h"
 				>
 			</File>
 			<File

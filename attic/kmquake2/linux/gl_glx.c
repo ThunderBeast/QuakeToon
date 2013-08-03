@@ -652,7 +652,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 		vidmode_ext = true;
 	}
 
-	visinfo = qglXChooseVisual(dpy, scrnum, attrib);
+	visinfo = glXChooseVisual(dpy, scrnum, attrib);
 	if (!visinfo) {
 		fprintf(stderr, "Error couldn't get an RGB, Double-buffered, Depth visual\n");
 		return rserr_invalid_mode;
@@ -727,9 +727,9 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 
 	XFlush(dpy);
 
-	ctx = qglXCreateContext(dpy, visinfo, NULL, True);
+	ctx = glXCreateContext(dpy, visinfo, NULL, True);
 
-	qglXMakeCurrent(dpy, win, ctx);
+	glXMakeCurrent(dpy, win, ctx);
 
 	*pwidth = width;
 	*pheight = height;
@@ -737,7 +737,7 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 	// let the sound and input subsystems know about the new window
 	ri.Vid_NewWindow (width, height);
 
-	qglXMakeCurrent(dpy, win, ctx);
+	glXMakeCurrent(dpy, win, ctx);
 
 	return rserr_ok;
 }
@@ -759,7 +759,7 @@ void GLimp_Shutdown( void )
 
 	if (dpy) {
 		if (ctx)
-			qglXDestroyContext(dpy, ctx);
+			glXDestroyContext(dpy, ctx);
 		if (win)
 			XDestroyWindow(dpy, win);
 		if (vidmode_active)
@@ -801,8 +801,8 @@ void GLimp_BeginFrame( float camera_seperation )
 */
 void GLimp_EndFrame (void)
 {
-	qglFlush();
-	qglXSwapBuffers(dpy, win);
+	glFlush();
+	glXSwapBuffers(dpy, win);
 }
 
 /*
@@ -826,7 +826,7 @@ void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
 		temptable[i][0] = *intbl++;
 		temptable[i][3] = 255;
 	}
-	qgl3DfxSetPaletteEXT((GLuint *)temptable);
+	gl3DfxSetPaletteEXT((GLuint *)temptable);
 }
 
 

@@ -35,20 +35,21 @@
 #endif
 #endif
 
-  //QUAKETOON: look into GLEW
- #define GL_TEXTURE_SHADER_NV 0x86DE
- #define GL_SHADER_OPERATION_NV 0x86DF
- #define GL_DSDT_NV 0x86F5
- #define GL_DSDT8_NV 0x8709
- #define GL_OFFSET_TEXTURE_2D_NV 0x86E8
- #define GL_PREVIOUS_TEXTURE_INPUT_NV 0x86E4
- #define GL_OFFSET_TEXTURE_MATRIX_NV 0x86E1
+//QUAKETOON: look into GLEW
+#define GL_TEXTURE_SHADER_NV 0x86DE
+#define GL_SHADER_OPERATION_NV 0x86DF
+#define GL_DSDT_NV 0x86F5
+#define GL_DSDT8_NV 0x8709
+#define GL_OFFSET_TEXTURE_2D_NV 0x86E8
+#define GL_PREVIOUS_TEXTURE_INPUT_NV 0x86E4
+#define GL_OFFSET_TEXTURE_MATRIX_NV 0x86E1
+#define GL_SHARED_TEXTURE_PALETTE_EXT 0x81FB
+extern void* (*qwglGetProcAddress)(char *symbol);
+extern void (*glLockArraysEXT) (GLint start, GLsizei count);
+extern void (*glUnlockArraysEXT) (void);
 
 
 #include "../client/ref.h"
-
-
-#include "qgl.h"
 
 // up / down
 #define PITCH    0

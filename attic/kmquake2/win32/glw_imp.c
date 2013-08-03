@@ -49,7 +49,7 @@ static qboolean VerifyDriver( void )
 {
 	char buffer[1024];
 
-	strcpy( buffer, qglGetString( GL_RENDERER ) );
+	strcpy( buffer, glGetString( GL_RENDERER ) );
 	strlwr( buffer );
 	if ( strcmp( buffer, "gdi generic" ) == 0 )
 		if ( !glw_state.mcd_accelerated )
@@ -628,7 +628,7 @@ qboolean GLimp_InitGL (void)
 	{
 		char buffer[1024];
 
-		strcpy( buffer, qglGetString( GL_RENDERER ) );
+		strcpy( buffer, glGetString( GL_RENDERER ) );
 		strlwr( buffer );
 		if (strstr(buffer, "Voodoo3")) {
 			VID_Printf( PRINT_ALL, "... Voodoo3 has no stencil buffer\n" );
@@ -646,13 +646,13 @@ qboolean GLimp_InitGL (void)
 
 /*	Moved to GL_SetDefaultState in r_glstate.c
 	// Vertex arrays
-	qglEnableClientState (GL_TEXTURE_COORD_ARRAY);
-	qglEnableClientState (GL_VERTEX_ARRAY);
-	qglEnableClientState (GL_COLOR_ARRAY);
+	glEnableClientState (GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState (GL_VERTEX_ARRAY);
+	glEnableClientState (GL_COLOR_ARRAY);
 
-	qglTexCoordPointer (2, GL_FLOAT, sizeof(texCoordArray[0][0]), texCoordArray[0][0]);
-	qglVertexPointer (3, GL_FLOAT, sizeof(vertexArray[0]), vertexArray[0]);
-	qglColorPointer (4, GL_FLOAT, sizeof(colorArray[0]), colorArray[0]);
+	glTexCoordPointer (2, GL_FLOAT, sizeof(texCoordArray[0][0]), texCoordArray[0][0]);
+	glVertexPointer (3, GL_FLOAT, sizeof(vertexArray[0]), vertexArray[0]);
+	glColorPointer (4, GL_FLOAT, sizeof(colorArray[0]), colorArray[0]);
 	//glState.activetmu[0] = true;
 	// end vertex arrays
 */
@@ -730,15 +730,15 @@ void GLimp_BeginFrame( float camera_separation )
 
 	if ( camera_separation < 0 && glState.stereo_enabled )
 	{
-		qglDrawBuffer( GL_BACK_LEFT );
+		glDrawBuffer( GL_BACK_LEFT );
 	}
 	else if ( camera_separation > 0 && glState.stereo_enabled )
 	{
-		qglDrawBuffer( GL_BACK_RIGHT );
+		glDrawBuffer( GL_BACK_RIGHT );
 	}
 	else
 	{
-		qglDrawBuffer( GL_BACK );
+		glDrawBuffer( GL_BACK );
 	}
 }
 
@@ -753,7 +753,7 @@ void GLimp_EndFrame (void)
 {
 	int		err;
 
-	err = qglGetError();
+	err = glGetError();
 //	assert( err == GL_NO_ERROR );
 	if (err != GL_NO_ERROR)	// Output error code instead
 		VID_Printf (PRINT_DEVELOPER, "OpenGL Error %i\n", err);

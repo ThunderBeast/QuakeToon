@@ -1419,7 +1419,7 @@ REF_GL_OBJS = \
 	$(BUILDDIR)/ref_gl/gl_rsurf.o \
 	$(BUILDDIR)/ref_gl/gl_warp.o \
 	\
-	$(BUILDDIR)/ref_gl/qgl_linux.o \
+	$(BUILDDIR)/ref_gl/gl_linux.o \
 	$(BUILDDIR)/ref_gl/q_shared.o \
 	$(BUILDDIR)/ref_gl/q_shlinux.o \
 	$(BUILDDIR)/ref_gl/glob.o
@@ -1468,7 +1468,7 @@ $(BUILDDIR)/ref_gl/gl_rsurf.o :       $(REF_GL_DIR)/gl_rsurf.c
 $(BUILDDIR)/ref_gl/gl_warp.o :        $(REF_GL_DIR)/gl_warp.c
 	$(DO_GL_SHLIB_CC)
 
-$(BUILDDIR)/ref_gl/qgl_linux.o :      $(LINUX_DIR)/qgl_linux.c
+$(BUILDDIR)/ref_gl/gl_linux.o :      $(LINUX_DIR)/gl_linux.c
 	$(DO_GL_SHLIB_CC)
 
 $(BUILDDIR)/ref_gl/gl_fxmesa.o :      $(LINUX_DIR)/gl_fxmesa.c

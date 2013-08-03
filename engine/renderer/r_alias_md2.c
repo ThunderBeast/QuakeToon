@@ -587,14 +587,14 @@ void R_DrawAliasMD2VolumeShadow(dmdl_t *paliashdr, vec3_t bbox[8])
 
     if (!r_shadowvolumes->value)
     {
-        qglColorMask(0, 0, 0, 0);
-        qglPushAttrib(GL_STENCIL_BUFFER_BIT);         // save stencil buffer
-        qglClear(GL_STENCIL_BUFFER_BIT);
+        glColorMask(0, 0, 0, 0);
+        glPushAttrib(GL_STENCIL_BUFFER_BIT);         // save stencil buffer
+        glClear(GL_STENCIL_BUFFER_BIT);
         GL_Enable(GL_STENCIL_TEST);
 
         GL_DepthMask(0);
         GL_DepthFunc(GL_LESS);
-        qglStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
     }
 
     R_BuildMD2ShadowVolume(paliashdr, light, projected_distance, r_shadowvolumes->value || !zfail);
@@ -605,42 +605,42 @@ void R_DrawAliasMD2VolumeShadow(dmdl_t *paliashdr, vec3_t bbox[8])
         if (zfail)                // Carmack reverse
         {
             GL_CullFace(GL_BACK); // quake is backwards, this culls front faces
-            qglStencilOp(GL_KEEP, GL_INCR, GL_KEEP);
+            glStencilOp(GL_KEEP, GL_INCR, GL_KEEP);
         }
         else                       // Z-Pass
         {
             GL_CullFace(GL_FRONT); // quake is backwards, this culls back faces
-            qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
         }
         if (glConfig.drawRangeElements)
         {
-            qglDrawRangeElementsEXT(GL_TRIANGLES, 0, md2shadow_va, md2shadow_index, GL_UNSIGNED_INT, indexArray);
+            glDrawRangeElementsEXT(GL_TRIANGLES, 0, md2shadow_va, md2shadow_index, GL_UNSIGNED_INT, indexArray);
         }
         else
         {
-            qglDrawElements(GL_TRIANGLES, md2shadow_index, GL_UNSIGNED_INT, indexArray);
+            glDrawElements(GL_TRIANGLES, md2shadow_index, GL_UNSIGNED_INT, indexArray);
         }
 
         // decrement stencil if frontface is behind depthbuffer
         if (zfail)                 // Carmack reverse
         {
             GL_CullFace(GL_FRONT); // quake is backwards, this culls back faces
-            qglStencilOp(GL_KEEP, GL_DECR, GL_KEEP);
+            glStencilOp(GL_KEEP, GL_DECR, GL_KEEP);
         }
         else                      // Z-Pass
         {
             GL_CullFace(GL_BACK); // quake is backwards, this culls front faces
-            qglStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
+            glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
         }
     }
 
     if (glConfig.drawRangeElements)
     {
-        qglDrawRangeElementsEXT(GL_TRIANGLES, 0, md2shadow_va, md2shadow_index, GL_UNSIGNED_INT, indexArray);
+        glDrawRangeElementsEXT(GL_TRIANGLES, 0, md2shadow_va, md2shadow_index, GL_UNSIGNED_INT, indexArray);
     }
     else
     {
-        qglDrawElements(GL_TRIANGLES, md2shadow_index, GL_UNSIGNED_INT, indexArray);
+        glDrawElements(GL_TRIANGLES, md2shadow_index, GL_UNSIGNED_INT, indexArray);
     }
     GL_UnlockArrays();
 
@@ -682,12 +682,12 @@ void R_DrawAliasMD2VolumeShadow(dmdl_t *paliashdr, vec3_t bbox[8])
      *
      *      // increment stencil if backface is behind depthbuffer
      *      GL_CullFace(GL_BACK); // quake is backwards, this culls front faces
-     *      qglStencilOp(GL_KEEP, GL_INCR, GL_KEEP);
+     *      glStencilOp(GL_KEEP, GL_INCR, GL_KEEP);
      *      CastMD2VolumeShadow(paliashdr, light, projected_distance);
      *
      *      // decrement stencil if frontface is behind depthbuffer
      *      GL_CullFace(GL_FRONT); // quake is backwards, this culls back faces
-     *      qglStencilOp(GL_KEEP, GL_DECR, GL_KEEP);
+     *      glStencilOp(GL_KEEP, GL_DECR, GL_KEEP);
      *      CastMD2VolumeShadow(paliashdr, light, projected_distance);
      *
      *      dl++; // increment dl
@@ -697,14 +697,14 @@ void R_DrawAliasMD2VolumeShadow(dmdl_t *paliashdr, vec3_t bbox[8])
     {
         GL_CullFace(GL_FRONT);
         GL_Disable(GL_STENCIL_TEST);
-        qglColorMask(1, 1, 1, 1);
+        glColorMask(1, 1, 1, 1);
 
         GL_DepthMask(1);
         GL_DepthFunc(GL_LEQUAL);
 
         // draw shadows for this model now
         R_ShadowBlend(shadowalpha_md2 * currententity->alpha); // was r_shadowalpha->value
-        qglPopAttrib();                                        // restore stencil buffer
+        glPopAttrib();                                        // restore stencil buffer
     }
 }
 
@@ -1016,7 +1016,7 @@ void R_DrawAliasMD2Model(entity_t *e)
         R_FlipModel(true);
     }
 
-    qglPushMatrix();
+    glPushMatrix();
     e->angles[ROLL] = e->angles[ROLL] * R_RollMult();           // roll is backwards
     R_RotateForEntity(e, true);
     e->angles[ROLL] = e->angles[ROLL] * R_RollMult();           // roll is backwards
@@ -1075,7 +1075,7 @@ void R_DrawAliasMD2Model(entity_t *e)
     GL_TexEnv(GL_REPLACE);
     GL_ShadeModel(GL_FLAT);
 
-    qglPopMatrix();
+    glPopMatrix();
 
     if (mirrormodel)
     {
@@ -1100,7 +1100,7 @@ void R_DrawAliasMD2Model(entity_t *e)
         && !((e->flags & RF_MASK_SHELL) && (e->flags & RF_TRANSLUCENT)) &&
         (r_shadows->value >= 1) && (shadowalpha_md2 >= DIV255))
     {
-        qglPushMatrix();
+        glPushMatrix();
         R_RotateForEntity(e, false);
         GL_DisableTexture(0);
         GL_Enable(GL_BLEND);
@@ -1116,7 +1116,7 @@ void R_DrawAliasMD2Model(entity_t *e)
 
         GL_Disable(GL_BLEND);
         GL_EnableTexture(0);
-        qglPopMatrix();
+        glPopMatrix();
     }
 }
 
@@ -1214,7 +1214,7 @@ void R_DrawAliasMD2ModelShadow(entity_t *e)
      *      R_ShadowLight (e->origin, shadevector);
      * default:
      *      {*/
-    qglPushMatrix();
+    glPushMatrix();
     R_RotateForEntity(e, false);
     GL_DisableTexture(0);
     GL_Enable(GL_BLEND);
@@ -1230,7 +1230,7 @@ void R_DrawAliasMD2ModelShadow(entity_t *e)
 
     GL_Disable(GL_BLEND);
     GL_EnableTexture(0);
-    qglPopMatrix();
+    glPopMatrix();
 
     /*	}
      *      break;

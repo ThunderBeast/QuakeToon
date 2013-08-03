@@ -1773,7 +1773,7 @@ SOURCE=.\win32\glw_imp.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\win32\qgl_win.c
+SOURCE=.\win32\gl_win.c
 
 !IF  "$(CFG)" == "quake2 - Win32 Release"
 
@@ -2559,7 +2559,7 @@ SOURCE=.\qcommon\qfiles.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\renderer\qgl.h
+SOURCE=.\renderer\gl.h
 # End Source File
 # Begin Source File
 
