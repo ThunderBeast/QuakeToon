@@ -161,7 +161,7 @@ void Cbuf_CopyToDefer(void)
  */
 void Cbuf_InsertFromDefer(void)
 {
-    Cbuf_InsertText(defer_text_buf);
+    Cbuf_InsertText((char*)defer_text_buf);
     defer_text_buf[0] = 0;
 }
 
@@ -892,21 +892,21 @@ char *Cmd_CompleteCommand(char *partial)
 // check for exact match
     for (cmd = cmd_functions; cmd; cmd = cmd->next)
     {
-        if (!_stricmp(partial, cmd->name))
+        if (!Q_stricmp(partial, cmd->name))
         {
             return cmd->name;
         }
     }
     for (a = cmd_alias; a; a = a->next)
     {
-        if (!_stricmp(partial, a->name))
+        if (!Q_stricmp(partial, a->name))
         {
             return a->name;
         }
     }
     for (cvar = cvar_vars; cvar; cvar = cvar->next)
     {
-        if (!_stricmp(partial, cvar->name))
+        if (!Q_stricmp(partial, cvar->name))
         {
             return cvar->name;
         }
@@ -993,21 +993,21 @@ qboolean Cmd_IsComplete(char *command)
 // check for exact match
     for (cmd = cmd_functions; cmd; cmd = cmd->next)
     {
-        if (!_stricmp(command, cmd->name))
+        if (!Q_stricmp(command, cmd->name))
         {
             return true;
         }
     }
     for (a = cmd_alias; a; a = a->next)
     {
-        if (!_stricmp(command, a->name))
+        if (!Q_stricmp(command, a->name))
         {
             return true;
         }
     }
     for (cvar = cvar_vars; cvar; cvar = cvar->next)
     {
-        if (!_stricmp(command, cvar->name))
+        if (!Q_stricmp(command, cvar->name))
         {
             return true;
         }
