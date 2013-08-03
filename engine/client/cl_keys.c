@@ -37,11 +37,11 @@ int edit_line    = 0;
 int history_line = 0;
 
 int      key_waiting;
-char     *keybindings[256];
+char     *keybindings[K_LAST];
 qboolean consolekeys[256];      // if true, can't be rebound while in console
 qboolean menubound[256];        // if true, can't be rebound while in menu
 int      keyshift[256];         // key to map to if shift held down in console
-int      key_repeats[256];      // if > 1, it is autorepeating
+int      key_repeats[K_LAST];      // if > 1, it is autorepeating
 qboolean keydown[256];
 
 typedef struct

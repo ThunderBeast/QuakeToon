@@ -31,11 +31,11 @@
 
 #include "vid.h"
 #include "screen.h"
-#include "sound.h"
+#include "../sound/sound.h"
 #include "input.h"
 #include "keys.h"
 #include "console.h"
-#include "cdaudio.h"
+#include "../sound/cdaudio.h"
 
 #include "cinematic.h"
 

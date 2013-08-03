@@ -824,7 +824,7 @@ NET_Socket(char *net_interface, int port, netsrc_t type, int family)
 	hints.ai_flags = AI_PASSIVE;
 
 	if (!net_interface || !net_interface[0] ||
-		!Q_stricmp(net_interface, "localhost"))
+		!Q_strcasecmp(net_interface, "localhost"))
 	{
 		Host = (family == AF_INET6) ? "::" : "0.0.0.0";
 	}
