@@ -2,7 +2,7 @@
 # Define target name
 set ( TARGET_NAME QuakeToon )
 
-add_definitions(-DC_ONLY=1)
+add_definitions(-DC_ONLY=1) 
 
 file ( GLOB COMMON_FILES   qcommon/*.c )
 file ( GLOB CLIENT_FILES   client/*.c )

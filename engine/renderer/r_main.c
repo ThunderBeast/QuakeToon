@@ -1214,7 +1214,7 @@ qboolean R_SetMode(void)
  * R_Init
  * ===============
  */
-qboolean R_Init(void *hinstance, void *hWnd, char *reason)
+int R_Init(void *hinstance, void *hWnd, char *reason)
 {
     char         renderer_buffer[1000];
     char         vendor_buffer[1000];
@@ -1246,7 +1246,7 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
         QGL_Shutdown();
         VID_Printf(PRINT_ALL, "R_Init() - could not load \"%s\"\n", gl_driver->string);
         memcpy(reason, "Init of QGL dynamic bindings Failed!\0", 37);
-        return false;
+        return -1;
     }
 
     // initialize OS-specific parts of OpenGL
@@ -1254,7 +1254,7 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
     {
         QGL_Shutdown();
         memcpy(reason, "Init of OS-specific parts of OpenGL Failed!\0", 44);
-        return false;
+        return -1;
     }
 
     // set our "safe" modes
@@ -1266,7 +1266,7 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
         QGL_Shutdown();
         VID_Printf(PRINT_ALL, "R_Init() - could not R_SetMode()\n");
         memcpy(reason, "Creation of the window/context set-up Failed!\0", 46);
-        return false;
+        return -1;
     }
 
     RB_InitBackend();     // init mini-backend
@@ -1872,7 +1872,7 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
         VID_Printf(PRINT_ALL, "glGetError() = 0x%x\n", err);
     }
 
-    return true;
+    return 0;
 }
 
 

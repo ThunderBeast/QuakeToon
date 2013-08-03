@@ -470,7 +470,7 @@ void V_AddBlend(float r, float g, float b, float a, float *v_blend);
 //
 // r_main.c
 //
-qboolean R_Init(void *hinstance, void *hWnd, char *reason);
+int R_Init(void *hinstance, void *hWnd, char *reason);
 void R_ClearState(void);
 void R_Shutdown(void);
 void R_RenderView(refdef_t *fd);
