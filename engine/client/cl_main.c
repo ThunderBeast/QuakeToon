@@ -1800,7 +1800,7 @@ void CL_Frame(int msec)
     }
 
     // let the mouse activate or deactivate
-    IN_Frame();
+    //IN_Frame();
 
     // decide the simulation time
     cls.frametime = extratime / 1000.0;
@@ -1948,7 +1948,7 @@ void CL_Init(void)
 
     CDAudio_Init();
     CL_InitLocal();
-    IN_Init();
+    //IN_Init();
 
     //Cbuf_AddText ("exec autoexec.cfg\n");
     FS_ExecAutoexec();

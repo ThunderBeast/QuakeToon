@@ -34,6 +34,7 @@
  */
 
 #include "../renderer/r_local.h"
+#include <SDL/SDL.h>
 
 /*
  * GL extensions
@@ -51,6 +52,15 @@ void ( *qglActiveTextureARB ) ( GLenum );
 void ( *qglClientActiveTextureARB ) ( GLenum );
 
 /* ========================================================================= */
+
+/*
+ * Returns the adress of a GL function
+ */
+void* qwglGetProcAddress (const char* proc)
+{
+	return SDL_GL_GetProcAddress ( proc );
+}
+
 
 void
 QGL_Shutdown ( void )

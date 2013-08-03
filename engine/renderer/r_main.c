@@ -2014,13 +2014,13 @@ void R_BeginFrame(float camera_separation)
 
     if (r_log->modified)
     {
-        GLimp_EnableLogging(r_log->value);
+        //GLimp_EnableLogging(r_log->value);
         r_log->modified = false;
     }
 
     if (r_log->value)
     {
-        GLimp_LogNewFrame();
+        //GLimp_LogNewFrame();
     }
 
     //
@@ -2042,10 +2042,11 @@ void R_BeginFrame(float camera_separation)
             Com_sprintf(envbuffer, sizeof(envbuffer), "SST_GAMMA=%f", g);
             putenv(envbuffer);
         }
-        UpdateGammaRamp();
+        
+        //UpdateGammaRamp();
     }
 
-    GLimp_BeginFrame(camera_separation);
+    //GLimp_BeginFrame(camera_separation);
 
     //
     // go into 2D mode

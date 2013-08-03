@@ -364,6 +364,10 @@ void Com_PageInMemory(byte *buffer, int size);
 int Q_strcasecmp(char *s1, char *s2);
 int Q_strcasecmp(char *s1, char *s2);
 int Q_strncasecmp(char *s1, char *s2, int n);
+int Q_strlcpy(char *dst, const char *src, int size);
+int Q_strlcat(char *dst, const char *src, int size);
+
+
 
 //=============================================
 

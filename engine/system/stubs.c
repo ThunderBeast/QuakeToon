@@ -22,6 +22,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/client.h"
 
+char *Sys_GetClipboardData( void )
+{
+	return NULL;
+}
+
+void Sys_AppActivate (void)
+{
+
+}
+
+void Sys_Rmdir (char *path)
+{
+	
+}
+
+
 cvar_t *cd_nocd;
 cvar_t *cd_loopcount;
 cvar_t *cd_looptrack;

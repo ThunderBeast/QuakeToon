@@ -193,6 +193,28 @@ void Com_DPrintf(char *fmt, ...)
     Com_Printf("%s", msg);
 }
 
+/*
+ * A Com_Printf that only shows up when either the "modder" or "developer"
+ * cvars is set
+ */
+void
+Com_MDPrintf(char *fmt, ...)
+{
+    va_list argptr;
+    char msg[MAXPRINTMSG];
+
+    if (/*(!modder || !modder->value) &&*/ (!developer || !developer->value))
+    {
+        return;
+    }
+
+    va_start(argptr, fmt);
+    vsnprintf(msg, MAXPRINTMSG, fmt, argptr);
+    va_end(argptr);
+
+    Com_Printf("%s", msg);
+}
+
 
 /*
  * =============

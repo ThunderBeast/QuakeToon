@@ -44,7 +44,7 @@
 #define GL_PREVIOUS_TEXTURE_INPUT_NV 0x86E4
 #define GL_OFFSET_TEXTURE_MATRIX_NV 0x86E1
 #define GL_SHARED_TEXTURE_PALETTE_EXT 0x81FB
-extern void* (*qwglGetProcAddress)(char *symbol);
+extern void* qwglGetProcAddress(const char *symbol);
 extern void (*glLockArraysEXT) (GLint start, GLsizei count);
 extern void (*glUnlockArraysEXT) (void);
 
