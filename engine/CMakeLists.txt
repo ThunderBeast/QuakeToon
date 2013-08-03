@@ -31,5 +31,17 @@ add_custom_command(TARGET QuakeToon
     COMMAND cp ${quaketoonbin} ${CMAKE_SOURCE_DIR}/bin/QuakeToon
 )
 
-file ( GLOB GAME_FILES     game/*.c game/acesrc/*.c )
+file ( GLOB GAME_FILES game/*.c game/acesrc/*.c )
+
+add_library( game SHARED ${GAME_FILES} )
+
+get_target_property(gamebin game LOCATION)
+
+add_custom_command(TARGET game
+    POST_BUILD
+    COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/bin/baseq2
+    COMMAND cp ${gamebin} ${CMAKE_SOURCE_DIR}/bin/baseq2/game.so
+)
+
+
 
