@@ -234,7 +234,8 @@ char **SetFontNames(void)
     }
 
     // check pak after
-    if (fontfiles = FS_ListPak("fonts/", &nfonts))
+    fontfiles = FS_ListPak("fonts/", &nfonts);
+    if (fontfiles)
     {
         for (i = 0; i < nfonts && nfontnames < MAX_FONTS; i++)
         {
@@ -380,7 +381,7 @@ void Options_Interface_MenuInit(void)
     s_options_interface_font_box.generic.y         = y += 2 * MENU_LINE_SIZE;
     s_options_interface_font_box.generic.name      = "font";
     s_options_interface_font_box.generic.callback  = FontFunc;
-    s_options_interface_font_box.itemnames         = font_names;
+    s_options_interface_font_box.itemnames         = (const char**)font_names;
     s_options_interface_font_box.generic.statusbar = "changes console and menu text font";
 
     s_options_interface_fontsize_slider.generic.type      = MTYPE_SLIDER;

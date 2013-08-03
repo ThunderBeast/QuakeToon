@@ -204,7 +204,8 @@ void Field_Draw(menufield_s *f)
                                f->generic.y + f->generic.parent->y, f->generic.name, 255);
     }
 
-    if (xtra = stringLengthExtra(f->buffer))
+    xtra = stringLengthExtra(f->buffer);
+    if (xtra)
     {
         strncpy(tempbuffer, f->buffer + f->visible_offset, f->visible_length);
         offset = strlen(tempbuffer) - xtra;

@@ -276,7 +276,8 @@ char **SetCrosshairNames(void)
     }
 
     // check pak after
-    if (crosshairfiles = FS_ListPak("pics/", &ncrosshairs))
+    crosshairfiles = FS_ListPak("pics/", &ncrosshairs);
+    if (crosshairfiles)
     {
         for (i = 0; i < ncrosshairs && ncrosshairnames < MAX_CROSSHAIRS; i++)
         {
@@ -419,7 +420,7 @@ void Options_Screen_MenuInit(void)
     s_options_screen_crosshair_box.generic.y         = y;
     s_options_screen_crosshair_box.generic.name      = "crosshair";
     s_options_screen_crosshair_box.generic.callback  = CrosshairFunc;
-    s_options_screen_crosshair_box.itemnames         = crosshair_names;
+    s_options_screen_crosshair_box.itemnames         = (const char**) crosshair_names;
     s_options_screen_crosshair_box.generic.statusbar = "changes crosshair";
 
     // Psychospaz's changeable size crosshair

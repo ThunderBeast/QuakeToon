@@ -265,7 +265,7 @@ static void Keys_MenuInit(void)
     s_keys_back_action.generic.y          = (BINDS_MAX + 2) * MENU_LINE_SIZE;
     s_keys_back_action.generic.name       = " back";
     s_keys_back_action.generic.callback   = UI_BackMenu;
-    s_keys_back_action.generic.cursordraw = KeysBackCursorDrawFunc;
+    s_keys_back_action.generic.cursordraw = (void (*)(void *))KeysBackCursorDrawFunc;
 
     for (i = 0; i < BINDS_MAX; i++)
     {

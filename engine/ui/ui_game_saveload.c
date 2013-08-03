@@ -86,7 +86,8 @@ void Create_Savestrings(void)
                 {
                     Com_sprintf(m_mapname, sizeof(m_mapname), mapname);
                 }
-                if (ch = strchr(m_mapname, '$'))
+                ch = strchr(m_mapname, '$');
+                if (ch)
                 {
                     *ch = 0;                     // terminate string at $ marker
                 }

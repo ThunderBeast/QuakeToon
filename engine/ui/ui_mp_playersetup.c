@@ -99,7 +99,7 @@ static void ModelCallback(void *unused)
 {
     char scratch[MAX_QPATH];
 
-    s_player_skin_box.itemnames = s_pmi[s_player_model_box.curvalue].skindisplaynames;
+    s_player_skin_box.itemnames = (const char**) s_pmi[s_player_model_box.curvalue].skindisplaynames;
     s_player_skin_box.curvalue  = 0;
 
     // only register model and skin on starup or when changed
@@ -490,7 +490,7 @@ qboolean PlayerConfig_MenuInit(void)
     s_player_model_box.generic.callback      = ModelCallback;
     s_player_model_box.generic.cursor_offset = -6 * MENU_FONT_SIZE;
     s_player_model_box.curvalue  = currentdirectoryindex;
-    s_player_model_box.itemnames = s_pmnames;
+    s_player_model_box.itemnames = (const char**) s_pmnames;
 
     s_player_skin_title.generic.type  = MTYPE_SEPARATOR;
     s_player_skin_title.generic.flags = QMF_LEFT_JUSTIFY;
@@ -505,7 +505,7 @@ qboolean PlayerConfig_MenuInit(void)
     s_player_skin_box.generic.callback      = SkinCallback; // Knightmare added, was 0
     s_player_skin_box.generic.cursor_offset = -6 * MENU_FONT_SIZE;
     s_player_skin_box.curvalue       = currentskinindex;
-    s_player_skin_box.itemnames      = s_pmi[currentdirectoryindex].skindisplaynames;
+    s_player_skin_box.itemnames      = (const char **) s_pmi[currentdirectoryindex].skindisplaynames;
     s_player_skin_box.generic.flags |= QMF_SKINLIST;
 
     s_player_hand_title.generic.type  = MTYPE_SEPARATOR;

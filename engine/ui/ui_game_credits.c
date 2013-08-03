@@ -497,7 +497,7 @@ void M_Menu_Credits_f(void)
     char *p;
 
     creditsBuffer = NULL;
-    count         = FS_LoadFile("credits", &creditsBuffer);
+    count         = FS_LoadFile("credits", (void **) &creditsBuffer);
     if (count != -1)
     {
         p = creditsBuffer;
@@ -527,7 +527,7 @@ void M_Menu_Credits_f(void)
             }
         }
         creditsIndex[++n] = 0;
-        credits           = creditsIndex;
+        credits           = (const char**) creditsIndex;
     }
     else
     {
