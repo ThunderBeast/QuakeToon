@@ -74,7 +74,7 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#include "..\g_local.h"
+#include "../g_local.h"
 #include "acebot.h"
 
 int          num_players = 0;
@@ -466,7 +466,7 @@ float ACEIT_ItemNeed(edict_t *self, int item)
     case ITEMLIST_FLAG1:
         // If I am on team one or three, I want team two's flag
         if (!self->client->pers.inventory[item] &&
-            (self->client->resp.ctf_team == CTF_TEAM2) || (self->client->resp.ctf_team == CTF_TEAM3))
+            ((self->client->resp.ctf_team == CTF_TEAM2) || (self->client->resp.ctf_team == CTF_TEAM3)))
         {
             return 10.0;
         }
@@ -477,7 +477,7 @@ float ACEIT_ItemNeed(edict_t *self, int item)
 
     case ITEMLIST_FLAG2:
         if (!self->client->pers.inventory[item] &&
-            (self->client->resp.ctf_team == CTF_TEAM1) || (self->client->resp.ctf_team == CTF_TEAM3))
+            ((self->client->resp.ctf_team == CTF_TEAM1) || (self->client->resp.ctf_team == CTF_TEAM3)))
         {
             return 10.0;
         }
@@ -488,7 +488,7 @@ float ACEIT_ItemNeed(edict_t *self, int item)
 
     case ITEMLIST_FLAG3:
         if (!self->client->pers.inventory[item] &&
-            (self->client->resp.ctf_team == CTF_TEAM1) || (self->client->resp.ctf_team == CTF_TEAM2))
+            ((self->client->resp.ctf_team == CTF_TEAM1) || (self->client->resp.ctf_team == CTF_TEAM2)))
         {
             return 10.0;
         }

@@ -77,8 +77,8 @@
 //       to provide a "higher" level of AI.
 ////////////////////////////////////////////////////////////////////////
 
-#include "..\g_local.h"
-#include "..\m_player.h"
+#include "../g_local.h"
+#include "../m_player.h"
 
 #include "acebot.h"
 

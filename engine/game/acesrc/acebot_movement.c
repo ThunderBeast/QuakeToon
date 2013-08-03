@@ -72,7 +72,7 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#include "..\g_local.h"
+#include "../g_local.h"
 #include "acebot.h"
 
 // Platform states
@@ -120,7 +120,7 @@ qboolean ACEMV_CanMove(edict_t *self, int direction)
 
     tr = gi.trace(start, NULL, NULL, end, self, MASK_OPAQUE);
 
-    if ((tr.fraction > 0.3) && (tr.fraction != 1) || tr.contents & (CONTENTS_LAVA | CONTENTS_SLIME))
+    if (((tr.fraction > 0.3) && (tr.fraction != 1)) || (tr.contents & (CONTENTS_LAVA | CONTENTS_SLIME)))
     {
         if (debug_mode)
         {

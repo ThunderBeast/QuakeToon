@@ -73,8 +73,8 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#include "..\g_local.h"
-#include "..\m_player.h"
+#include "../g_local.h"
+#include "../m_player.h"
 #include "acebot.h"
 
 ///////////////////////////////////////////////////////////////////////
@@ -579,7 +579,7 @@ void ACESP_SetName(edict_t *bot, char *name, char *skin, char *team)
             {
                 if (!bot_info[i].ingame_count)
                 {
-                    sprintf(bot_name, bot_info[i].name);
+                    sprintf(bot_name, "%s", bot_info[i].name);
                     bot_info[i].ingame_count++;
                     break;
                 }
@@ -591,7 +591,7 @@ void ACESP_SetName(edict_t *bot, char *name, char *skin, char *team)
                 {
                     if (!bot_info[i].ingame_count)
                     {
-                        sprintf(bot_name, bot_info[i].name);
+                        sprintf(bot_name, "%s", bot_info[i].name);
                         bot_info[i].ingame_count++;
                         break;
                     }
@@ -620,8 +620,8 @@ void ACESP_SetName(edict_t *bot, char *name, char *skin, char *team)
         {
             if (!Q_strcasecmp(bot_name, bot_info[i].name))
             {
-                sprintf(bot_name, bot_info[i].name);                 // fix capitalization
-                sprintf(bot_skin, bot_info[i].skin);
+                sprintf(bot_name, "%s", bot_info[i].name);                 // fix capitalization
+                sprintf(bot_skin, "%s", bot_info[i].skin);
                 bot_info[i].ingame_count++;
                 break;
             }
@@ -637,7 +637,7 @@ void ACESP_SetName(edict_t *bot, char *name, char *skin, char *team)
                     break;
                 }
             }
-            sprintf(bot_skin, skinnames[r]);
+            sprintf(bot_skin, "%s", skinnames[r]);
         }
     }
     else

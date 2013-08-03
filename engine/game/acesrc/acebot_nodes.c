@@ -73,9 +73,10 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#include "..\g_local.h"
+#include "../g_local.h"
 #include "acebot.h"
-#include <direct.h>
+#include <sys/stat.h>
+//#include <direct.h>
 
 // flags
 qboolean newmap = true;
@@ -858,7 +859,7 @@ void ACEND_SaveNodes()
 
     // Knightmare- rewote this
     GameDirRelativePath("nav", filename);      // create nav dir if needed
-    _mkdir(filename);
+    mkdir(filename, 666);
     sprintf(tempname, "nav/%s.nod", level.mapname);
     GameDirRelativePath(tempname, filename);
     //strcpy(filename,"ace\\nav\\");

@@ -72,7 +72,7 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#include "..\g_local.h"
+#include "../g_local.h"
 #include "acebot.h"
 
 qboolean debug_mode = false;
