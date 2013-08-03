@@ -19,7 +19,7 @@
  */
 
 #include "qcommon.h"
-#include "include/unzip.h"
+#include "../../vendor/unzip/unzip.h"
 
 #pragma warning (disable : 4715)
 
