@@ -22,6 +22,7 @@
 // g_misc.c
 
 #include "g_local.h"
+#include <sys/stat.h>
 
 int gibsthisframe = 0;
 int lastgibframe  = 0;
@@ -4947,7 +4948,7 @@ void SP_target_fountain(edict_t *ent)
 #define MAX_SKINNAME         64
 #define DEADSOLDIER_MODEL    "models/deadbods/dude/tris.md2"
 
-#include <direct.h>
+//#include <direct.h>
 #include "pak.h"
 
 int PatchDeadSoldier()
@@ -4972,7 +4973,8 @@ int PatchDeadSoldier()
         return 0;               // we're in baseq2
     }
     sprintf(outfilename, "%s/%s", gamedir->string, DEADSOLDIER_MODEL);
-    if (outfile = fopen(outfilename, "rb"))
+    outfile = fopen(outfilename, "rb");
+    if (outfile)
     {
         // output file already exists, move along
         fclose(outfile);
@@ -5085,15 +5087,15 @@ int PatchDeadSoldier()
 
     // save new model
     sprintf(outfilename, "%s/models", gamedir->string);         // make some dirs if needed
-    _mkdir(outfilename);
+    mkdir(outfilename, 666);
     strcat(outfilename, "/deadbods");
-    _mkdir(outfilename);
+    mkdir(outfilename, 666);
     strcat(outfilename, "/dude");
-    _mkdir(outfilename);
+    mkdir(outfilename, 666);
     sprintf(outfilename, "%s/%s", gamedir->string, DEADSOLDIER_MODEL);
     p  = strstr(outfilename, "/tris.md2");
     *p = 0;
-    _mkdir(outfilename);
+    mkdir(outfilename, 666);
 
     sprintf(outfilename, "%s/%s", gamedir->string, DEADSOLDIER_MODEL);
 

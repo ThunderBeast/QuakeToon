@@ -64,7 +64,7 @@ void Text_Close(edict_t *ent)
 void Text_BuildDisplay(texthnd_t *hnd)
 {
     int  i, imax, n;
-    char *p1, *p2, *p3;
+    byte *p1, *p2, *p3;
 
     for (i = 0; i < hnd->page_length + 2; i++)
     {
@@ -98,7 +98,7 @@ void Text_BuildDisplay(texthnd_t *hnd)
 
     i            = 0;
     p2           = p1;
-    text[i].text = p2;
+    text[i].text = (char*)p2;
     if (hnd->nlines > hnd->page_length)
     {
         imax = hnd->page_length - 2;
@@ -113,7 +113,7 @@ void Text_BuildDisplay(texthnd_t *hnd)
         {
             i++;
             p2++;
-            text[i].text = p2;
+            text[i].text = (char*)p2;
         }
         else
         {
@@ -292,7 +292,7 @@ void Text_Prev(edict_t *ent)
 void Do_Text_Display(edict_t *activator, int flags, char *message)
 {
     int /*i,*/ L;
-    char       *p1, *p2, *p3;
+    byte       *p1, *p2, *p3;
     char       sound[64];
     texthnd_t  *hnd;
     byte       *temp_buffer;
@@ -443,7 +443,7 @@ void Do_Text_Display(edict_t *activator, int flags, char *message)
         memcpy(hnd->buffer, message, L);
     }
 
-    hnd->size = strlen(hnd->buffer) + 1;
+    hnd->size = strlen((char*)hnd->buffer) + 1;
 
     // Default page length:
     hnd->page_length = MAX_LINES - 2;
@@ -462,24 +462,24 @@ void Do_Text_Display(edict_t *activator, int flags, char *message)
             p3++;
         }
 
-        p2 = strstr(p1, "L=");
+        p2 = (byte*) strstr((char*)p1, "L=");
         if (p2 && (p2 < p3))
         {
             p2 += 2;
-            sscanf(p2, "%d", &hnd->page_length);
+            sscanf((char*)p2, "%d", &hnd->page_length);
             hnd->page_length += 1;
         }
-        p2 = strstr(p1, "W=");
+        p2 = (byte*) strstr((char*)p1, "W=");
         if (p2 && (p2 < p3))
         {
             p2 += 2;
-            sscanf(p2, "%d", &hnd->page_width);
+            sscanf((char*)p2, "%d", &hnd->page_width);
         }
-        p2 = strstr(p1, "I=");
+        p2 = (byte*)strstr((char*)p1, "I=");
         if (p2 && (p2 < p3))
         {
             p2 += 2;
-            sscanf(p2, "%s", hnd->background_image);
+            sscanf((char*)p2, "%s", hnd->background_image);
         }
         p3++;
         if (*p3 == 10)
@@ -799,7 +799,7 @@ done_linebreaks:
                 p1++;
                 if (*p1 == 'a')
                 {
-                    strcpy(sound, p1 + 1);
+                    strcpy(sound, (char*)(p1 + 1));
                     p1--;
                     p2 = p1;
                     while (*p2 != 0)

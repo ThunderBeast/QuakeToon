@@ -21,7 +21,7 @@
 
 #include "g_local.h"
 
-//#define DISABLE_FOG
+#define DISABLE_FOG
 
 /*#ifdef KMQUAKE2_ENGINE_MOD
  * #define NEW_FOGSYS
@@ -33,7 +33,7 @@ void Fog_Init()
 }
 
 
-void Fog(vec3_t viewpoint)
+void Fog(edict_t *ent)
 {
 }
 

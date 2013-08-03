@@ -520,7 +520,7 @@ void actorChaingun(edict_t *self)
 
 // Grenade Launcher
 // DWH: Pretty much a straight copy from Lazarus gunner code
-#define GRENADE_VELOCITY            632.4555320337
+#define GRENADE_VELOCITY            632
 #define GRENADE_VELOCITY_SQUARED    400000
 void actorGrenadeLauncher(edict_t *self)
 {

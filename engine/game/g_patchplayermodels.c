@@ -28,8 +28,9 @@
 //   PatchPlayerModels (ent);
 
 
-#include <direct.h>
+//#include <direct.h>
 #include "g_local.h"
+#include <sys/stat.h>
 
 
 // id md2 stuff
@@ -62,7 +63,8 @@ int PatchPlayerModels(char *modelname)
         return 0;               // we're in baseq2
     }
     sprintf(outfilename, "%s/players/%s/tris.md2", game->string, modelname);
-    if (outfile = fopen(outfilename, "rb"))
+    outfile = fopen(outfilename, "rb");
+    if (outfile)
     {
         // output file already exists, move along
         fclose(outfile);
@@ -159,9 +161,9 @@ int PatchPlayerModels(char *modelname)
 
     // save new player model
     sprintf(outfilename, "%s/players", game->string);           // make some dirs if needed
-    _mkdir(outfilename);
+    mkdir(outfilename, 666);
     sprintf(outfilename, "%s/players/%s", game->string, modelname);
-    _mkdir(outfilename);
+    mkdir(outfilename, 666);
     sprintf(outfilename, "%s/players/%s/tris.md2", game->string, modelname);
 
     if (!(outfile = fopen(outfilename, "wb")))

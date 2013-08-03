@@ -2,10 +2,13 @@
 # Define target name
 set ( TARGET_NAME QuakeToon )
 
+add_definitions(-DC_ONLY=1)
+
 file ( GLOB COMMON_FILES   qcommon/*.c )
 file ( GLOB SERVER_FILES   server/*.c )
+file ( GLOB GAME_FILES     game/*.c )
 
-set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} )
+set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${GAME_FILES} )
 
 add_executable(QuakeToon ${SOURCE_FILES})
 set (CMAKE_EXE_LINKER_FLAGS "-framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")

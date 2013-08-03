@@ -316,7 +316,7 @@ void SaveEntProps(edict_t *e, FILE *f)
             e->sounds, e->count);
     fprintf(f, "noise_index = %d\n"
                "noise_index2= %d\n"
-               "volume      = %d\n"
+               "volume      = %f\n"
                "attenuation = %g\n"
                "wait        = %g\n"
                "delay       = %g\n"
@@ -2736,7 +2736,7 @@ void ClientCommand(edict_t *ent)
     {
         if (parm)
         {
-            char    filename[_MAX_PATH];
+            char    filename[MAX_OSPATH];
             edict_t *e;
             FILE    *f;
 //			int		i;

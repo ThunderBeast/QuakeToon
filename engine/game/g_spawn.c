@@ -604,6 +604,8 @@ void ED_ParseField(char *key, char *value, edict_t *ent)
 
             case F_IGNORE:
                 break;
+            default:
+                break;    
             }
             return;
         }
@@ -1114,7 +1116,7 @@ void LoadTransitionEnts()
     }
     if (game.transition_ents)
     {
-        char    t_file[_MAX_PATH];
+        char    t_file[MAX_OSPATH];
         int     i, j;
         FILE    *f;
         vec3_t  v_spawn;

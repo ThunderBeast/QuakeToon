@@ -23,7 +23,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+ 
+#if !defined(__APPLE__)
 #include <malloc.h>
+#endif
 
 #ifndef NULL
 #define NULL    ((void *)0)
@@ -88,8 +91,6 @@ typedef vec_t           vec3_t[3];
 
 #define  DVIS_PVS              0 // vis.bitofs[][0]
 #define  DVIS_PHS              1 // vis.bitofs[][1]
-
-typedef unsigned char   byte;
 
 //=============================
 // Entire BSP Tree Structures
@@ -614,7 +615,7 @@ lightdata_t *read_lightdata(void)
     // How many lightdata chars are there?
     map->num_lightchars = header.lumps[LUMP_LIGHTDATA].filelen;
 
-    fprintf(stderr, "lightdata count=%d\n", map->num_lightchars);
+    fprintf(stderr, "lightdata count=%d\n", (int) map->num_lightchars);
 
     if (map->num_lightchars <= 0)
     {
@@ -787,7 +788,7 @@ surfedge_t *read_surfedges(void)
     // How many surfedge_t records are there?
     map->num_surfedges = header.lumps[LUMP_SURFEDGES].filelen;
 
-    fprintf(stderr, "surfedge count=%d\n", map->num_surfedges);
+    fprintf(stderr, "surfedge count=%d\n", (int) map->num_surfedges);
 
     if (map->num_surfedges <= 0)
     {

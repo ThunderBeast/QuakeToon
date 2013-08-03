@@ -1,5 +1,7 @@
 // g_turret.c
 
+#ifdef THIS_FILE_MIGHT_BE_DEAD
+
 #include "g_local.h"
 
 #define SF_TURRETDRIVER_REMOTE_DRIVER    1
@@ -2136,3 +2138,5 @@ void SP_turret_driver(edict_t *self)
     }
     gi.linkentity(self);
 }
+
+#endif

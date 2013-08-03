@@ -394,20 +394,13 @@ void blaster_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t *s
             tempevent = TE_BLASTER2;
         }
         else if (self->style == BLASTER_BLUE)         //blue
-#ifdef KMQUAKE2_ENGINE_MOD // Knightmare- looks better than flechette{
+        {
             tempevent = TE_BLUEHYPERBLASTER;
         }
-#else
-        {
-            tempevent = TE_FLECHETTE;
-        }
-#endif
-#ifdef KMQUAKE2_ENGINE_MOD
         else if (self->style == BLASTER_RED)         //red
         {
             tempevent = TE_REDBLASTER;
         }
-#endif
         else         //standard yellow
         {
             tempevent = TE_BLASTER;

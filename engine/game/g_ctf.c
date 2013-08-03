@@ -1709,7 +1709,7 @@ void CTFDeadDropFlag(edict_t *self)
 }
 
 
-qboolean CTFDrop_Flag(edict_t *ent, gitem_t *item)
+void CTFDrop_Flag(edict_t *ent, gitem_t *item)
 {
     edict_t *dropped = NULL;
 
@@ -1724,7 +1724,7 @@ qboolean CTFDrop_Flag(edict_t *ent, gitem_t *item)
         {
             safe_cprintf(ent, PRINT_HIGH, "Winners don't drop flags.\n");
         }
-        return false;
+        return;
     }
     else
     {
@@ -1782,7 +1782,7 @@ qboolean CTFDrop_Flag(edict_t *ent, gitem_t *item)
                 dropped->owner               = ent;
             }
         }
-        return true;
+        return;
     }
 }
 
@@ -5079,33 +5079,33 @@ void CTFEndMatch(void)
         if ((ctfgame.team1 > ctfgame.team2) && (ctfgame.team1 > ctfgame.team3))
         {
             safe_bprintf(PRINT_CHAT, "RED team won over the BLUE and GREEN teams by %d CAPTURES!\n",
-                         ctfgame.team1 - (ctfgame.team2 > ctfgame.team3) ? ctfgame.team2 : ctfgame.team3);
+                         ctfgame.team1 - ((ctfgame.team2 > ctfgame.team3) ? ctfgame.team2 : ctfgame.team3));
         }
         else if ((ctfgame.team2 > ctfgame.team1) && (ctfgame.team2 > ctfgame.team3))
         {
             safe_bprintf(PRINT_CHAT, "BLUE team won over the RED and GREEN teams by %d CAPTURES!\n",
-                         ctfgame.team2 - (ctfgame.team1 > ctfgame.team3) ? ctfgame.team1 : ctfgame.team3);
+                         ctfgame.team2 - ((ctfgame.team1 > ctfgame.team3) ? ctfgame.team1 : ctfgame.team3));
         }
         else if ((ctfgame.team3 > ctfgame.team1) && (ctfgame.team3 > ctfgame.team2))
         {
             safe_bprintf(PRINT_CHAT, "GREEN team won over the RED and BLUE teams by %d CAPTURES!\n",
-                         ctfgame.team3 - (ctfgame.team1 > ctfgame.team2) ? ctfgame.team1 : ctfgame.team2);
+                         ctfgame.team3 - ((ctfgame.team1 > ctfgame.team2) ? ctfgame.team1 : ctfgame.team2));
         }
         // frag tie breaker
         else if ((ctfgame.total1 > ctfgame.total2) && (ctfgame.total1 > ctfgame.total3))
         {
             safe_bprintf(PRINT_CHAT, "RED team won over the BLUE and GREEN teams by %d POINTS!\n",
-                         ctfgame.total1 - (ctfgame.total2 > ctfgame.total3) ? ctfgame.total2 : ctfgame.total3);
+                         ctfgame.total1 - ((ctfgame.total2 > ctfgame.total3) ? ctfgame.total2 : ctfgame.total3));
         }
         else if ((ctfgame.total2 > ctfgame.total1) && (ctfgame.total2 > ctfgame.total3))
         {
             safe_bprintf(PRINT_CHAT, "BLUE team won over the RED and GREEN teams by %d POINTS!\n",
-                         ctfgame.total2 - (ctfgame.total1 > ctfgame.total3) ? ctfgame.total1 : ctfgame.total3);
+                         ctfgame.total2 - ((ctfgame.total1 > ctfgame.total3) ? ctfgame.total1 : ctfgame.total3));
         }
         else if ((ctfgame.total3 > ctfgame.total1) && (ctfgame.total3 > ctfgame.total2))
         {
             safe_bprintf(PRINT_CHAT, "GREEN team won over the RED and BLUE teams by %d POINTS!\n",
-                         ctfgame.total3 - (ctfgame.total1 > ctfgame.total2) ? ctfgame.total1 : ctfgame.total2);
+                         ctfgame.total3 - ((ctfgame.total1 > ctfgame.total2) ? ctfgame.total1 : ctfgame.total2));
         }
         else
         {
@@ -5180,6 +5180,8 @@ void CTFWinElection(void)
                      ctfgame.etarget->client->pers.netname, ctfgame.elevel);
         strncpy(level.forcemap, ctfgame.elevel, sizeof(level.forcemap) - 1);
         EndDMLevel();
+        break;
+    default:
         break;
     }
     ctfgame.election = ELECT_NONE;
@@ -5769,6 +5771,9 @@ int CTFUpdateJoinMenu(edict_t *ent)
     case MATCH_GAME:
         joinmenu[jmenu_match].text = "*MATCH IN PROGRESS";
         break;
+    default:
+        break;
+
     }
 
     if (joinmenu[jmenu_red].text)
@@ -5932,6 +5937,10 @@ int TTCTFUpdateJoinMenu(edict_t *ent)
     case MATCH_GAME:
         ttctf_joinmenu[ttctf_jmenu_match].text = "*MATCH IN PROGRESS";
         break;
+
+    default:
+        break; 
+
     }
 
     if (ttctf_joinmenu[ttctf_jmenu_red].text)
@@ -6197,6 +6206,10 @@ qboolean CTFCheckRules(void)
                 CTFEndMatch();
                 gi.positioned_sound(world->s.origin, world, CHAN_AUTO | CHAN_RELIABLE, gi.soundindex("misc/bigtele.wav"), 1, ATTN_NONE, 0);
                 return false;
+
+            default:
+                break;
+
             }
         }
 
@@ -6259,6 +6272,9 @@ qboolean CTFCheckRules(void)
                 ctfgame.countdown = true;
                 gi.positioned_sound(world->s.origin, world, CHAN_AUTO | CHAN_RELIABLE, gi.soundindex("world/10_0.wav"), 1, ATTN_NONE, 0);
             }
+            break;
+
+        default:
             break;
         }
         return false;

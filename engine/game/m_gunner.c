@@ -45,7 +45,7 @@ static int sound_sight;
 //       (for the gunner, not for players) since the gunner now shoots
 //       smarter, and adjusted things so that the initial velocity out
 //       of the barrel is the same.
-#define GRENADE_VELOCITY            632.4555320337
+#define GRENADE_VELOCITY            632
 #define GRENADE_VELOCITY_SQUARED    400000
 
 void gunner_idlesound(edict_t *self)
