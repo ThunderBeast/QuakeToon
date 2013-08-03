@@ -480,7 +480,7 @@ void CallMyFriends(edict_t *targ, edict_t *attacker)
         {         // the target is a live monster on a dmgteam
             if (!attacker->dmgteam || strcmp(targ->dmgteam, attacker->dmgteam))
             {     // attacker is not on same dmgteam as target
-                if (!Q_stricmp(targ->dmgteam, "player") && attacker->client)
+                if (!Q_strcasecmp(targ->dmgteam, "player") && attacker->client)
                 { // Target is a GOOD_GUY, attacked by the player. Allow self-defense,
                   // but don't get other dmgteam teammates involved.
                   // Special case for misc_actors - if ACTOR_BAD_GUY isn't set,
@@ -577,7 +577,7 @@ void CallMyFriends(edict_t *targ, edict_t *attacker)
         {
             targ->spawnflags          &= ~SF_MONSTER_GOODGUY;
             targ->monsterinfo.aiflags &= ~(AI_GOOD_GUY + AI_FOLLOW_LEADER);
-            if (targ->dmgteam && !Q_stricmp(targ->dmgteam, "player"))
+            if (targ->dmgteam && !Q_strcasecmp(targ->dmgteam, "player"))
             {
                 targ->dmgteam = NULL;
             }
@@ -586,7 +586,7 @@ void CallMyFriends(edict_t *targ, edict_t *attacker)
     // 1.6.1.3 change - one chance and one chance only to call friends
 
 /*	if(targ->dmgteam)
- *              if(Q_stricmp(targ->dmgteam,"player"))
+ *              if(Q_strcasecmp(targ->dmgteam,"player"))
  *                      targ->dmgteam = NULL; */
 }
 
@@ -619,7 +619,7 @@ void M_ReactToDamage(edict_t *targ, edict_t *attacker)
         return;
     }
 
-    is_turret = (attacker->classname && !Q_stricmp(attacker->classname, "turret_breach"));
+    is_turret = (attacker->classname && !Q_strcasecmp(attacker->classname, "turret_breach"));
 
     targ->spawnflags &= ~(SF_MONSTER_AMBUSH | SF_MONSTER_SIGHT);        // 1.6.1.3
 
@@ -628,7 +628,7 @@ void M_ReactToDamage(edict_t *targ, edict_t *attacker)
     if (!(attacker->client) && !(attacker->svflags & SVF_MONSTER) && !is_turret &&
         !(targ->monsterinfo.aiflags & AI_DUCKED))
     {
-        if (!targ->movetarget || (targ->movetarget && Q_stricmp(targ->movetarget->classname, "thing")))
+        if (!targ->movetarget || (targ->movetarget && Q_strcasecmp(targ->movetarget->classname, "thing")))
         {
             int     i;
             edict_t *thing;
@@ -646,9 +646,9 @@ void M_ReactToDamage(edict_t *targ, edict_t *attacker)
             }
             VectorCopy(targ->maxs, maxs);
             if ((attacker == world) ||
-                (!Q_stricmp(attacker->classname, "func_door")) ||
-                (!Q_stricmp(attacker->classname, "func_water")) ||
-                (!Q_stricmp(attacker->classname, "func_pushable")))
+                (!Q_strcasecmp(attacker->classname, "func_door")) ||
+                (!Q_strcasecmp(attacker->classname, "func_water")) ||
+                (!Q_strcasecmp(attacker->classname, "func_pushable")))
             {
                 // Just send the monster straight ahead and hope for the best.
                 thing = SpawnThing();
@@ -668,7 +668,7 @@ void M_ReactToDamage(edict_t *targ, edict_t *attacker)
                     }
                 }
             }
-            else if (!Q_stricmp(attacker->classname, "target_laser"))
+            else if (!Q_strcasecmp(attacker->classname, "target_laser"))
             {
                 // Send the monster in a direction perpendicular to laser
                 // path, whichever direction is closest to current angles
@@ -746,8 +746,8 @@ void M_ReactToDamage(edict_t *targ, edict_t *attacker)
                 thing = SpawnThing();
                 vectoangles(best_dir, thing->s.angles);
             }
-            if ((!Q_stricmp(attacker->classname, "func_door")) ||
-                (!Q_stricmp(attacker->classname, "func_pushable")))
+            if ((!Q_strcasecmp(attacker->classname, "func_door")) ||
+                (!Q_strcasecmp(attacker->classname, "func_pushable")))
             {
                 run = 256;
             }
@@ -1002,7 +1002,7 @@ void T_Damage(edict_t *in_targ, edict_t *inflictor, edict_t *in_attacker, vec3_t
 
     // If targ is a fake player for the real player viewing camera, get that player
     // out of the camera and do the damage to him
-    if (!Q_stricmp(targ->classname, "camplayer"))
+    if (!Q_strcasecmp(targ->classname, "camplayer"))
     {
         if (targ->target_ent && targ->target_ent->client && targ->target_ent->client->spycam)
         {
@@ -1046,7 +1046,7 @@ void T_Damage(edict_t *in_targ, edict_t *inflictor, edict_t *in_attacker, vec3_t
     }
     // If targ is a remote turret_driver and attacker is a player, replace turret_driver
     // with normal infantry dude and turn TRACK off on corresponding turret_breach
-    if (targ->classname && !Q_stricmp(targ->classname, "turret_driver") &&
+    if (targ->classname && !Q_strcasecmp(targ->classname, "turret_driver") &&
         (targ->spawnflags & 1) && (attacker->client))
     {
         edict_t *monster;
@@ -1137,7 +1137,7 @@ void T_Damage(edict_t *in_targ, edict_t *inflictor, edict_t *in_attacker, vec3_t
 
 // Lazarus: If monster is currently chasing a "thing" and mod is a laser,
 //          ignore knockback to give poor guy a chance to vamoose.
-    if (targ->movetarget && !Q_stricmp(targ->movetarget->classname, "thing") && (mod == MOD_TARGET_LASER))
+    if (targ->movetarget && !Q_strcasecmp(targ->movetarget->classname, "thing") && (mod == MOD_TARGET_LASER))
     {
         knockback = 0;
     }
@@ -1309,7 +1309,7 @@ void T_Damage(edict_t *in_targ, edict_t *inflictor, edict_t *in_attacker, vec3_t
         {
             // Lazarus: For func_explosive target, check spawnflags and, if needed,
             //          damage type
-            if (targ->classname && !Q_stricmp(targ->classname, "func_explosive"))
+            if (targ->classname && !Q_strcasecmp(targ->classname, "func_explosive"))
             {
                 qboolean good_damage = true;
                 // Knightmare- changed spawnflag

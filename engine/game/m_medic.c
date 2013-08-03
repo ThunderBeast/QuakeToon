@@ -382,7 +382,7 @@ void medic_NextPatrolPoint(edict_t *self, edict_t *hint)
             {
                 continue;
             }
-            if (Q_stricmp(e->classname, "hint_path"))
+            if (Q_strcasecmp(e->classname, "hint_path"))
             {
                 continue;
             }
@@ -476,7 +476,7 @@ void medic_idle(edict_t *self)
             {
                 continue;
             }
-            if (Q_stricmp(e->classname, "hint_path"))
+            if (Q_strcasecmp(e->classname, "hint_path"))
             {
                 continue;
             }

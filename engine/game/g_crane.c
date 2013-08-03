@@ -263,7 +263,7 @@ void crane_light_off(edict_t *light)
 
 void Crane_Move_Done(edict_t *ent)
 {
-    if (!Q_stricmp(ent->classname, "crane_hook"))
+    if (!Q_strcasecmp(ent->classname, "crane_hook"))
     {
         edict_t *cable;
         edict_t *light;
@@ -295,7 +295,7 @@ void Crane_Move_Done(edict_t *ent)
     }
 // Lazarus: ACK! If crate is being carried, it's NOT a MOVETYPE_PUSHABLE!!!!
 //	        if(ent->movetype == MOVETYPE_PUSHABLE)
-    if (!stricmp(ent->classname, "func_pushable"))
+    if (!Q_strcasecmp(ent->classname, "func_pushable"))
     {
         edict_t *e;
 
@@ -533,7 +533,7 @@ void Crane_Move_Final(edict_t *ent)
     }
 
     VectorScale(ent->moveinfo.dir, ent->moveinfo.remaining_distance / FRAMETIME, ent->velocity);
-    if (!stricmp(ent->classname, "crane_hook"))
+    if (!Q_strcasecmp(ent->classname, "crane_hook"))
     {
         VectorCopy(ent->velocity, ent->crane_cable->velocity);
         ent->crane_cable->velocity[2] = 0;
@@ -563,7 +563,7 @@ void Crane_Move_Begin(edict_t *ent)
     VectorScale(ent->moveinfo.dir, ent->moveinfo.speed, ent->velocity);
     frames = floor((ent->moveinfo.remaining_distance / ent->moveinfo.speed) / FRAMETIME);
     ent->moveinfo.remaining_distance -= frames * ent->moveinfo.speed * FRAMETIME;
-    if (!stricmp(ent->classname, "crane_hook"))
+    if (!Q_strcasecmp(ent->classname, "crane_hook"))
     {
         if ((ent->crane_light) && (ent->crane_cargo == NULL))
         {
@@ -612,7 +612,7 @@ void G_FindCraneParts()
         {
             continue;
         }
-        if (stricmp(e->classname, "crane_control"))
+        if (Q_strcasecmp(e->classname, "crane_control"))
         {
             continue;
         }

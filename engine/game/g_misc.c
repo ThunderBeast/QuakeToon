@@ -824,7 +824,7 @@ void path_corner_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_
 
     // Lazarus: Distinguish between path_corner and target_actor, or target_actor
     //          with JUMP spawnflag will result in teleport. Ack!
-    if ((next) && (next->spawnflags & 1) && !Q_stricmp(next->classname, "path_corner"))
+    if ((next) && (next->spawnflags & 1) && !Q_strcasecmp(next->classname, "path_corner"))
     {
         VectorCopy(next->s.origin, v);
         v[2] += next->mins[2];
@@ -2979,7 +2979,7 @@ void misc_viper_bomb_use(edict_t *self, edict_t *other, edict_t *activator)
 
     if (self->pathtarget)
     {
-        if (!Q_stricmp(self->pathtarget, self->targetname))
+        if (!Q_strcasecmp(self->pathtarget, self->targetname))
         {
             VectorScale(self->movedir, self->speed, self->velocity);
             VectorCopy(self->movedir, self->moveinfo.dir);
@@ -3624,7 +3624,7 @@ void teleport_transition_ents(edict_t *transition, edict_t *teleporter, edict_t 
         // Do not under any circumstances move these entities:
         for (p = &DoNotMove, nogo = false; p->name && !nogo; p++)
         {
-            if (!Q_stricmp(ent->classname, p->name))
+            if (!Q_strcasecmp(ent->classname, p->name))
             {
                 nogo = true;
             }
@@ -3721,7 +3721,7 @@ void teleport_transition_ents(edict_t *transition, edict_t *teleporter, edict_t 
         // Do not under any circumstances move these entities:
         for (p = &DoNotMove, nogo = false; p->name && !nogo; p++)
         {
-            if (!Q_stricmp(ent->classname, p->name))
+            if (!Q_strcasecmp(ent->classname, p->name))
             {
                 nogo = true;
             }
@@ -3949,7 +3949,7 @@ void teleporter_touch(edict_t *self, edict_t *other, cplane_t *plane, csurface_t
         transition = G_Find(NULL, FOFS(classname), "trigger_transition");
         while (transition)
         {
-            if (!Q_stricmp(transition->targetname, teleporter->targetname))
+            if (!Q_strcasecmp(transition->targetname, teleporter->targetname))
             {
                 teleport_transition_ents(transition, teleporter, dest);
             }
@@ -5036,7 +5036,7 @@ int PatchDeadSoldier()
         for (k = 0; k < numitems && !data; k++)
         {
             fread(&pakitem, 1, sizeof(pak_item_t), fpak);
-            if (!stricmp(pakitem.name, DEADSOLDIER_MODEL))
+            if (!Q_strcasecmp(pakitem.name, DEADSOLDIER_MODEL))
             {
                 fseek(fpak, pakitem.start, SEEK_SET);
                 fread(&model, sizeof(dmdl_t), 1, fpak);

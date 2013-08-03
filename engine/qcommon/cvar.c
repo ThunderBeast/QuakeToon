@@ -528,7 +528,7 @@ void Cvar_FixCheatVars(qboolean allowCheats)
             continue;
         }
 
-        if (!Q_stricmp(var->string, var->default_string))
+        if (!Q_strcasecmp(var->string, var->default_string))
         {
             continue;
         }

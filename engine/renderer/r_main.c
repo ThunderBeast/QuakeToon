@@ -1442,7 +1442,7 @@ qboolean R_Init(void *hinstance, void *hWnd, char *reason)
 
     // If using one of the mini-drivers, a Voodoo w/ WickedGL, or pre-1.2 driver,
     // use the texture formats determined by gl_texturesolidmode and gl_texturealphamode.
-    if (Q_stricmp(gl_driver->string, "opengl32") || (glConfig.rendType == GLREND_VOODOO) ||
+    if (Q_strcasecmp(gl_driver->string, "opengl32") || (glConfig.rendType == GLREND_VOODOO) ||
         ((glConfig.version_major < 2) && (glConfig.version_minor < 2)) ||
         (!r_newlightmapformat || !r_newlightmapformat->value))
     {
@@ -2158,7 +2158,7 @@ void R_BeginFrame(float camera_separation)
 
         if ((glState.camera_separation == 0) || !glState.stereo_enabled)
         {
-            if (Q_stricmp(r_drawbuffer->string, "GL_FRONT") == 0)
+            if (Q_strcasecmp(r_drawbuffer->string, "GL_FRONT") == 0)
             {
                 qglDrawBuffer(GL_FRONT);
             }

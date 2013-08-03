@@ -1063,7 +1063,7 @@ void trigger_inside_think(edict_t *self)
         {
             continue;
         }
-        if (stricmp(self->pathtarget, hit->targetname))
+        if (Q_strcasecmp(self->pathtarget, hit->targetname))
         {
             continue;
         }
@@ -1809,13 +1809,13 @@ void WriteTransitionEdict(FILE *f, edict_t *changelevel, edict_t *ent)
     void    *p;
 
     memcpy(&e, ent, sizeof(edict_t));
-    if (!Q_stricmp(e.classname, "target_laser") ||
-        !Q_stricmp(e.classname, "target_blaster"))
+    if (!Q_strcasecmp(e.classname, "target_laser") ||
+        !Q_strcasecmp(e.classname, "target_blaster"))
     {
         vectoangles(e.movedir, e.s.angles);
     }
 
-    if (!Q_stricmp(e.classname, "target_speaker"))
+    if (!Q_strcasecmp(e.classname, "target_speaker"))
     {
         e.spawnflags |= 8;          // indicates that "message" contains noise
     }
@@ -1897,7 +1897,7 @@ void WriteTransitionEdict(FILE *f, edict_t *changelevel, edict_t *ent)
         }
     }
     if (e.classname &&
-        (!Q_stricmp(e.classname, "misc_actor") || strstr(e.classname, "monster_")) &&
+        (!Q_strcasecmp(e.classname, "misc_actor") || strstr(e.classname, "monster_")) &&
         (e.svflags & SVF_GIB))
     {
         //(e.health <= e.gib_health) )
@@ -2012,7 +2012,7 @@ int trigger_transition_ents(edict_t *changelevel, edict_t *self)
         {
             continue;
         }
-        if (!Q_stricmp(ent->classname, "func_tracktrain") && !(ent->spawnflags & 8) && ent->targetname)
+        if (!Q_strcasecmp(ent->classname, "func_tracktrain") && !(ent->spawnflags & 8) && ent->targetname)
         {
             edict_t *e;
 
@@ -2109,7 +2109,7 @@ int trigger_transition_ents(edict_t *changelevel, edict_t *self)
         // Do not under any circumstances move these entities:
         for (p = DoNotMove, nogo = false; p->name && !nogo; p++)
         {
-            if (!Q_stricmp(ent->classname, p->name))
+            if (!Q_strcasecmp(ent->classname, p->name))
             {
                 nogo = true;
             }
@@ -2167,7 +2167,7 @@ int trigger_transition_ents(edict_t *changelevel, edict_t *self)
         // Do not under any circumstances move these entities:
         for (p = DoNotMove, nogo = false; p->name && !nogo; p++)
         {
-            if (!Q_stricmp(ent->classname, p->name))
+            if (!Q_strcasecmp(ent->classname, p->name))
             {
                 nogo = true;
             }

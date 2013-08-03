@@ -563,7 +563,7 @@ void ED_ParseField(char *key, char *value, edict_t *ent)
 
     for (f = fields; f->name; f++)
     {
-        if (!(f->flags & FFL_NOSPAWN) && !Q_stricmp(f->name, key))
+        if (!(f->flags & FFL_NOSPAWN) && !Q_strcasecmp(f->name, key))
         {               // found it
             if (f->flags & FFL_SPAWNTEMP)
             {
@@ -721,7 +721,7 @@ qboolean LoadAliasFile(char *name)
                         for (k = 0; k < numitems && !in_pak; k++)
                         {
                             fread(&pakitem, 1, sizeof(pak_item_t), fpak);
-                            if (!stricmp(pakitem.name, textname))
+                            if (!Q_strcasecmp(pakitem.name, textname))
                             {
                                 in_pak = true;
                                 fseek(fpak, pakitem.start, SEEK_SET);
@@ -1055,15 +1055,15 @@ void G_FindTeams(void)
             continue;
         }
         // Lazarus: some entities may have psuedo-teams that shouldn't be handled here
-        if (e->classname && !Q_stricmp(e->classname, "target_change"))
+        if (e->classname && !Q_strcasecmp(e->classname, "target_change"))
         {
             continue;
         }
-        if (e->classname && !Q_stricmp(e->classname, "target_bmodel_spawner"))
+        if (e->classname && !Q_strcasecmp(e->classname, "target_bmodel_spawner"))
         {
             continue;
         }
-        if (e->classname && !Q_stricmp(e->classname, "target_clone"))
+        if (e->classname && !Q_strcasecmp(e->classname, "target_clone"))
         {
             continue;
         }
@@ -1127,7 +1127,7 @@ void LoadTransitionEnts()
             spawn = G_Find(NULL, FOFS(targetname), game.spawnpoint);
             while (spawn)
             {
-                if (!Q_stricmp(spawn->classname, "info_player_start"))
+                if (!Q_strcasecmp(spawn->classname, "info_player_start"))
                 {
                     VectorCopy(spawn->s.origin, v_spawn);
                     break;
@@ -1288,7 +1288,7 @@ void SpawnEntities(char *mapname, char *entities, char *spawnpoint)
         entities = ED_ParseEdict(entities, ent);
 
         // yet another map hack
-        if (!Q_stricmp(level.mapname, "command") && !Q_stricmp(ent->classname, "trigger_once") && !Q_stricmp(ent->model, "*27"))
+        if (!Q_strcasecmp(level.mapname, "command") && !Q_strcasecmp(ent->classname, "trigger_once") && !Q_strcasecmp(ent->model, "*27"))
         {
             ent->spawnflags &= ~SPAWNFLAG_NOT_HARD;
         }
@@ -1439,11 +1439,11 @@ removeflags:
         // allows us to have movewith parent with same targetname as
         // other entities
         while (ent->movewith_ent &&
-               (Q_stricmp(ent->movewith_ent->classname, "func_train") &&
-                Q_stricmp(ent->movewith_ent->classname, "model_train") &&
-                Q_stricmp(ent->movewith_ent->classname, "func_door") &&
-                Q_stricmp(ent->movewith_ent->classname, "func_vehicle") &&
-                Q_stricmp(ent->movewith_ent->classname, "func_tracktrain")))
+               (Q_strcasecmp(ent->movewith_ent->classname, "func_train") &&
+                Q_strcasecmp(ent->movewith_ent->classname, "model_train") &&
+                Q_strcasecmp(ent->movewith_ent->classname, "func_door") &&
+                Q_strcasecmp(ent->movewith_ent->classname, "func_vehicle") &&
+                Q_strcasecmp(ent->movewith_ent->classname, "func_tracktrain")))
         {
             ent->movewith_ent = G_Find(ent->movewith_ent, FOFS(targetname), ent->movewith);
         }
@@ -1885,7 +1885,7 @@ void SP_worldspawn(edict_t *ent)
     // value for obscuring HOM with fog... "good" is driver-dependent
     if (ent->fogclip)
     {
-        if (gl_driver && !Q_stricmp(gl_driver->string, "3dfxgl"))
+        if (gl_driver && !Q_strcasecmp(gl_driver->string, "3dfxgl"))
         {
             gi.cvar_forceset("gl_clear", "0");
         }

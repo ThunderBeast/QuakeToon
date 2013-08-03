@@ -377,6 +377,8 @@ fsHandle_t *FS_HandleForFile(const char *path, fileHandle_t *f)
 
     // Failed
     Com_Error(ERR_DROP, "FS_HandleForFile: none free");
+
+    return NULL;
 }
 
 
@@ -504,7 +506,7 @@ int FS_FOpenFileRead(fsHandle_t *handle)
     // Knightmare- hack global vars for autodownloads
     file_from_pak = 0;
     file_from_pk3 = 0;
-    sprintf(last_pk3_name, "\0");
+    last_pk3_name[0] = 0;
 
     // Search through the path, one element at a time
     for (search = fs_searchPaths; search; search = search->next)
@@ -519,7 +521,7 @@ int FS_FOpenFileRead(fsHandle_t *handle)
                 {
                     continue;
                 }
-                if (!Q_stricmp(pack->files[i].name, handle->name))
+                if (!Q_strcasecmp(pack->files[i].name, handle->name))
                 {
                     // Found it!
                     Com_FilePath(pack->name, fs_fileInPath, sizeof(fs_fileInPath));
@@ -544,7 +546,7 @@ int FS_FOpenFileRead(fsHandle_t *handle)
                     else if (pack->pk3)
                     {                                                         // PK3
                         file_from_pk3 = 1;                                    // Knightmare added
-                        sprintf(last_pk3_name, strrchr(pack->name, '/') + 1); // Knightmare added
+                        sprintf(last_pk3_name, "%s", strrchr(pack->name, '/') + 1); // Knightmare added
                         handle->zip = unzOpen(pack->name);
                         if (handle->zip)
                         {
@@ -1046,6 +1048,8 @@ int FS_Tell(fileHandle_t f)
     {
         return unztell(handle->zip);
     }
+
+    return -1;
 }
 
 
@@ -1615,7 +1619,7 @@ void FS_Startup(void)
     }
 
     // Check for game override
-    if (stricmp(fs_gamedirvar->string, fs_currentGame))
+    if (Q_strcasecmp(fs_gamedirvar->string, fs_currentGame))
     {
         fsSearchPath_t *next;
         fsPack_t       *pack;
@@ -1645,7 +1649,7 @@ void FS_Startup(void)
             fs_searchPaths = next;
         }
 
-        if (!stricmp(fs_gamedirvar->string, BASEDIRNAME))               // Don't add baseq2 again
+        if (!Q_strcasecmp(fs_gamedirvar->string, BASEDIRNAME))               // Don't add baseq2 again
         {
             strcpy(fs_gamedir, fs_basedir->string);
         }

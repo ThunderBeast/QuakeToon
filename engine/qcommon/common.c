@@ -20,6 +20,7 @@
 // common.c -- misc functions used in client and server
 #include "qcommon.h"
 #include <setjmp.h>
+ #include <ctype.h>
 
 #ifdef _WIN32
 #include "../win32/winquake.h"

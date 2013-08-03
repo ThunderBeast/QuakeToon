@@ -1523,11 +1523,11 @@ edict_t *NextPathTrack(edict_t *train, edict_t *path)
                     {
                         continue;
                     }
-                    if (Q_stricmp(e->classname, "path_track"))
+                    if (Q_strcasecmp(e->classname, "path_track"))
                     {
                         continue;
                     }
-                    if (e->target && !Q_stricmp(e->target, path->targetname))
+                    if (e->target && !Q_strcasecmp(e->target, path->targetname))
                     {
                         next = e;
                         VectorSubtract(next->s.origin, path->s.origin, to_next);
@@ -1539,7 +1539,7 @@ edict_t *NextPathTrack(edict_t *train, edict_t *path)
 //						else
 //							path->prevpath = next;
                     }
-                    if (!next && e->target2 && !Q_stricmp(e->target2, path->targetname))
+                    if (!next && e->target2 && !Q_strcasecmp(e->target2, path->targetname))
                     {
                         next = e;
                         VectorSubtract(next->s.origin, path->s.origin, to_next);
@@ -1682,11 +1682,11 @@ edict_t *NextPathTrack(edict_t *train, edict_t *path)
                 {
                     continue;
                 }
-                if (Q_stricmp(e->classname, "path_track"))
+                if (Q_strcasecmp(e->classname, "path_track"))
                 {
                     continue;
                 }
-                if (e->target && !Q_stricmp(e->target, path->targetname))
+                if (e->target && !Q_strcasecmp(e->target, path->targetname))
                 {
                     next = e;
                     VectorSubtract(next->s.origin, path->s.origin, to_next);
@@ -1697,7 +1697,7 @@ edict_t *NextPathTrack(edict_t *train, edict_t *path)
                         next = NULL;
                     }
                 }
-                if (e->target2 && !Q_stricmp(e->target2, path->targetname))
+                if (e->target2 && !Q_strcasecmp(e->target2, path->targetname))
                 {
                     edict_t *next2;
                     float   dot2;
@@ -2420,7 +2420,7 @@ void find_tracktrain(edict_t *self)
     train = G_Find(NULL, FOFS(targetname), self->targetname);
     while (train && !train_found)
     {
-        if (!Q_stricmp(train->classname, "func_tracktrain"))
+        if (!Q_strcasecmp(train->classname, "func_tracktrain"))
         {
             train_found = true;
         }

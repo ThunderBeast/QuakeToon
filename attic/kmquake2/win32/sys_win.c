@@ -495,7 +495,7 @@ NoExtFunction:
 	model = (stdBits >> 4) & 15;
 	extModel = (stdBits >> 16) & 15;
 
-	if (!Q_stricmp(vendor, "AuthenticAMD"))
+	if (!Q_strcasecmp(vendor, "AuthenticAMD"))
 	{
 		strncpy(cpuString, "AMD", maxSize);
 
@@ -646,7 +646,7 @@ NoExtFunction:
 			break;
 		}
 	}
-	else if (!Q_stricmp(vendor, "CyrixInstead"))
+	else if (!Q_strcasecmp(vendor, "CyrixInstead"))
 	{
 		strncpy(cpuString, "Cyrix", maxSize);
 
@@ -676,7 +676,7 @@ NoExtFunction:
 			break;
 		}
 	}
-	else if (!Q_stricmp(vendor, "CentaurHauls"))
+	else if (!Q_strcasecmp(vendor, "CentaurHauls"))
 	{
 		strncpy(cpuString, "Centaur", maxSize);
 
@@ -702,7 +702,7 @@ NoExtFunction:
 			break;
 		}
 	}
-	else if (!Q_stricmp(vendor, "NexGenDriven"))
+	else if (!Q_strcasecmp(vendor, "NexGenDriven"))
 	{
 		strncpy(cpuString, "NexGen", maxSize);
 
@@ -722,7 +722,7 @@ NoExtFunction:
 			break;
 		}
 	}
-	else if (!Q_stricmp(vendor, "GenuineIntel"))
+	else if (!Q_strcasecmp(vendor, "GenuineIntel"))
 	{
 		strncpy(cpuString, "Intel", maxSize);
 

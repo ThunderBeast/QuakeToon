@@ -1373,11 +1373,11 @@ void CL_FixUpGender(void)
         {
             *p = 0;
         }
-        if ((Q_stricmp(sk, "male") == 0) || (Q_stricmp(sk, "cyborg") == 0))
+        if ((Q_strcasecmp(sk, "male") == 0) || (Q_strcasecmp(sk, "cyborg") == 0))
         {
             Cvar_Set("gender", "male");
         }
-        else if ((Q_stricmp(sk, "female") == 0) || (Q_stricmp(sk, "crackhor") == 0))
+        else if ((Q_strcasecmp(sk, "female") == 0) || (Q_strcasecmp(sk, "crackhor") == 0))
         {
             Cvar_Set("gender", "female");
         }

@@ -291,7 +291,7 @@ void SP_target_secret(edict_t *ent)
     }
 
     // map bug hack
-    if (!Q_stricmp(level.mapname, "mine3") && (ent->s.origin[0] == 280) && (ent->s.origin[1] == -2048) && (ent->s.origin[2] == -624))
+    if (!Q_strcasecmp(level.mapname, "mine3") && (ent->s.origin[0] == 280) && (ent->s.origin[1] == -2048) && (ent->s.origin[2] == -624))
     {
         ent->message = "You have found a secret area.";
     }
@@ -619,7 +619,7 @@ void use_target_changelevel(edict_t *self, edict_t *other, edict_t *activator)
         transition = G_Find(NULL, FOFS(classname), "trigger_transition");
         while (transition)
         {
-            if (!Q_stricmp(transition->targetname, self->targetname))
+            if (!Q_strcasecmp(transition->targetname, self->targetname))
             {
                 game.transition_ents = trigger_transition_ents(self, transition);
                 break;
@@ -647,7 +647,7 @@ void SP_target_changelevel(edict_t *ent)
         ent->spawnflags &= ~2;
     }
     // ugly hack because *SOMEBODY* screwed up their map
-    if ((Q_stricmp(level.mapname, "fact1") == 0) && (Q_stricmp(ent->map, "fact3") == 0))
+    if ((Q_strcasecmp(level.mapname, "fact1") == 0) && (Q_strcasecmp(ent->map, "fact3") == 0))
     {
         ent->map = "fact3$secret1";
     }
@@ -764,7 +764,7 @@ void SP_target_spawner(edict_t *self)
     self->svflags = SVF_NOCLIENT;
 
     //Knightmare- a horrendously ugly hack for the insane spawner on fact2
-    if (!Q_stricmp(level.mapname, "fact2") &&
+    if (!Q_strcasecmp(level.mapname, "fact2") &&
         VectorCompare(self->s.origin, fact2spawnpoint1))
     {
         //gi.dprintf("Moving target_spawner origin downward 8 units\n");
@@ -4280,7 +4280,7 @@ void target_animation_use(edict_t *self, edict_t *other, edict_t *activator)
         {
             return;
         }
-        if (self->message && Q_stricmp(self->message, activator->classname))
+        if (self->message && Q_strcasecmp(self->message, activator->classname))
         {
             return;
         }
@@ -4513,7 +4513,7 @@ void use_target_failure(edict_t *self, edict_t *other, edict_t *activator)
     }
 
     self->target_ent = activator;
-    if (stricmp(vid_ref->string, "gl") && stricmp(vid_ref->string, "kmgl"))
+    if (Q_strcasecmp(vid_ref->string, "gl") && Q_strcasecmp(vid_ref->string, "kmgl"))
     {
         self->flags     = 12;
         self->think     = target_failure_fade_lights;
@@ -4685,7 +4685,7 @@ void use_target_change(edict_t *self, edict_t *other, edict_t *activator)
         {
             target_ent->spawnflags = self->spawnflags;
             // special cases:
-            if (!Q_stricmp(target_ent->classname, "model_train"))
+            if (!Q_strcasecmp(target_ent->classname, "model_train"))
             {
                 if (target_ent->spawnflags & 32)
                 {
@@ -5170,7 +5170,7 @@ void clone(edict_t *self, edict_t *other, edict_t *activator)
 
     child->spawnflags = parent->spawnflags;
     // classname-specific stuff
-    if (!Q_stricmp(child->classname, "func_button"))
+    if (!Q_strcasecmp(child->classname, "func_button"))
     {
         VectorCopy(child->s.origin, child->pos1);
         child->moveinfo.distance = parent->moveinfo.distance;
@@ -5189,7 +5189,7 @@ void clone(edict_t *self, edict_t *other, edict_t *activator)
             child->touch = button_touch;
         }
     }
-    else if (!Q_stricmp(child->classname, "func_door"))
+    else if (!Q_strcasecmp(child->classname, "func_door"))
     {
         VectorCopy(child->s.origin, child->pos1);
         child->moveinfo.distance = parent->moveinfo.distance;
@@ -5213,7 +5213,7 @@ void clone(edict_t *self, edict_t *other, edict_t *activator)
         }
         child->nextthink = level.time + FRAMETIME;
     }
-    else if (!Q_stricmp(child->classname, "func_door_rotating"))
+    else if (!Q_strcasecmp(child->classname, "func_door_rotating"))
     {
         VectorClear(child->s.angles);
         VectorCopy(parent->s.angles, child->s.angles);
@@ -5239,7 +5239,7 @@ void clone(edict_t *self, edict_t *other, edict_t *activator)
         }
         child->nextthink = level.time + FRAMETIME;
     }
-    else if (!Q_stricmp(child->classname, "func_rotating"))
+    else if (!Q_strcasecmp(child->classname, "func_rotating"))
     {
         VectorClear(child->s.angles);
         if (child->spawnflags & 1)
@@ -5247,7 +5247,7 @@ void clone(edict_t *self, edict_t *other, edict_t *activator)
             child->use(child, NULL, NULL);
         }
     }
-    else if (!Q_stricmp(child->classname, "func_train"))
+    else if (!Q_strcasecmp(child->classname, "func_train"))
     {
         VectorClear(self->s.angles);
         child->smooth_movement = parent->smooth_movement;

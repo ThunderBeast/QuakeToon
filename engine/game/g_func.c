@@ -99,7 +99,7 @@ restart:
         }
 
         // For all but func_button and func_door, move origin and match velocities
-        if (Q_stricmp(e->classname, "func_door") && Q_stricmp(e->classname, "func_button"))
+        if (Q_strcasecmp(e->classname, "func_door") && Q_strcasecmp(e->classname, "func_button"))
         {
             VectorMA(self->s.origin, e->movewith_offset[0], forward, e->s.origin);
             VectorMA(e->s.origin, e->movewith_offset[1], right, e->s.origin);
@@ -129,7 +129,7 @@ restart:
         if (self->turn_rider)
         {
             // Match angular velocities
-            if (!Q_stricmp(e->classname, "func_rotating"))
+            if (!Q_strcasecmp(e->classname, "func_rotating"))
             {
                 float cr, sr;
                 float cy, sy;
@@ -157,11 +157,11 @@ restart:
                                 // their own.
                 if (!e->do_not_rotate)
                 {
-                    if (!Q_stricmp(e->classname, "turret_breach") || !Q_stricmp(e->classname, "turret_base"))
+                    if (!Q_strcasecmp(e->classname, "turret_breach") || !Q_strcasecmp(e->classname, "turret_base"))
                     {
                         VectorCopy(self->avelocity, e->avelocity);
                     }
-                    else if (!Q_stricmp(e->classname, "func_door_rotating"))
+                    else if (!Q_strcasecmp(e->classname, "func_door_rotating"))
                     {
                         VectorCopy(self->avelocity, e->avelocity);
                         VectorCopy(delta_angles, e->pos1);
@@ -204,8 +204,8 @@ restart:
 
         // Special cases:
         // Func_door/func_button and trigger fields
-        if ((!Q_stricmp(e->classname, "func_door")) ||
-            (!Q_stricmp(e->classname, "func_button")))
+        if ((!Q_strcasecmp(e->classname, "func_door")) ||
+            (!Q_strcasecmp(e->classname, "func_button")))
         {
             VectorAdd(e->s.angles, e->org_angles, angles);
             G_SetMovedir(angles, e->movedir);
@@ -237,8 +237,8 @@ restart:
         if (amove[YAW])
         {
             // Cross fingers here... move bounding boxes of doors and buttons
-            if ((!Q_stricmp(e->classname, "func_door")) ||
-                (!Q_stricmp(e->classname, "func_button")) ||
+            if ((!Q_strcasecmp(e->classname, "func_door")) ||
+                (!Q_strcasecmp(e->classname, "func_button")) ||
                 (e->solid == SOLID_TRIGGER))
             {
                 float  ca, sa, yaw;
@@ -1905,7 +1905,7 @@ void door_use_areaportals(edict_t *self, qboolean open)
 
     while ((t = G_Find(t, FOFS(targetname), self->target)))
     {
-        if (Q_stricmp(t->classname, "func_areaportal") == 0)
+        if (Q_strcasecmp(t->classname, "func_areaportal") == 0)
         {
             gi.SetAreaPortalState(t->style, open);
         }

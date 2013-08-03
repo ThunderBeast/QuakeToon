@@ -673,7 +673,7 @@ void SV_CalcBlend(edict_t *ent)
         float alpha;
 
         // Turn off fade for dead software players or they won't see menu
-        if ((ent->health <= 0) && (stricmp(vid_ref->string, "gl")) && (stricmp(vid_ref->string, "kmgl")))
+        if ((ent->health <= 0) && (Q_strcasecmp(vid_ref->string, "gl")) && (Q_strcasecmp(vid_ref->string, "kmgl")))
         {
             ent->client->fadein = 0;
         }
@@ -1225,7 +1225,7 @@ void G_SetClientEffects(edict_t *ent)
 
         if (level.flashlight_cost > 0)
         {
-            if (!Q_stricmp(FLASHLIGHT_ITEM, "health") ||
+            if (!Q_strcasecmp(FLASHLIGHT_ITEM, "health") ||
                 (ent->client->pers.inventory[ITEM_INDEX(FindItem(FLASHLIGHT_ITEM))] >= level.flashlight_cost))
             {
                 // Player has items remaining

@@ -2896,15 +2896,15 @@ void CTFTeam_f(edict_t *ent)
         return;
     }
 
-    if (Q_stricmp(t, "red") == 0)
+    if (Q_strcasecmp(t, "red") == 0)
     {
         desired_team = CTF_TEAM1;
     }
-    else if (Q_stricmp(t, "blue") == 0)
+    else if (Q_strcasecmp(t, "blue") == 0)
     {
         desired_team = CTF_TEAM2;
     }
-    else if (ttctf->value && (Q_stricmp(t, "green") == 0))
+    else if (ttctf->value && (Q_strcasecmp(t, "green") == 0))
     {
         desired_team = CTF_TEAM3;
     }
@@ -5705,12 +5705,12 @@ int CTFUpdateJoinMenu(edict_t *ent)
 
     if (ctf_forcejoin->string && *ctf_forcejoin->string)
     {
-        if (stricmp(ctf_forcejoin->string, "red") == 0)
+        if (Q_strcasecmp(ctf_forcejoin->string, "red") == 0)
         {
             joinmenu[jmenu_blue].text       = NULL;
             joinmenu[jmenu_blue].SelectFunc = NULL;
         }
-        else if (stricmp(ctf_forcejoin->string, "blue") == 0)
+        else if (Q_strcasecmp(ctf_forcejoin->string, "blue") == 0)
         {
             joinmenu[jmenu_red].text       = NULL;
             joinmenu[jmenu_red].SelectFunc = NULL;
@@ -5856,21 +5856,21 @@ int TTCTFUpdateJoinMenu(edict_t *ent)
 
     if (ctf_forcejoin->string && *ctf_forcejoin->string)
     {
-        if (stricmp(ctf_forcejoin->string, "red") == 0)
+        if (Q_strcasecmp(ctf_forcejoin->string, "red") == 0)
         {
             ttctf_joinmenu[ttctf_jmenu_blue].text        = NULL;
             ttctf_joinmenu[ttctf_jmenu_blue].SelectFunc  = NULL;
             ttctf_joinmenu[ttctf_jmenu_green].text       = NULL;
             ttctf_joinmenu[ttctf_jmenu_green].SelectFunc = NULL;
         }
-        else if (stricmp(ctf_forcejoin->string, "blue") == 0)
+        else if (Q_strcasecmp(ctf_forcejoin->string, "blue") == 0)
         {
             ttctf_joinmenu[ttctf_jmenu_red].text         = NULL;
             ttctf_joinmenu[ttctf_jmenu_red].SelectFunc   = NULL;
             ttctf_joinmenu[ttctf_jmenu_green].text       = NULL;
             ttctf_joinmenu[ttctf_jmenu_green].SelectFunc = NULL;
         }
-        else if (stricmp(ctf_forcejoin->string, "green") == 0)
+        else if (Q_strcasecmp(ctf_forcejoin->string, "green") == 0)
         {
             ttctf_joinmenu[ttctf_jmenu_red].text        = NULL;
             ttctf_joinmenu[ttctf_jmenu_red].SelectFunc  = NULL;
@@ -7059,7 +7059,7 @@ void CTFWarp(edict_t *ent)
     token = strtok(mlist, seps);
     while (token != NULL)
     {
-        if (Q_stricmp(token, gi.argv(1)) == 0)
+        if (Q_strcasecmp(token, gi.argv(1)) == 0)
         {
             break;
         }

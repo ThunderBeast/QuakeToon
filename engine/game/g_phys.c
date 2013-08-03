@@ -1770,7 +1770,7 @@ void SV_Physics_Toss(edict_t *ent)
         }
 
         // tpp... don't do sounds for the camera
-        if (Q_stricmp(ent->classname, "chasecam"))
+        if (Q_strcasecmp(ent->classname, "chasecam"))
         {
             if (!wasinwater && isinwater)
             {
@@ -3070,7 +3070,7 @@ void SV_Physics_Conveyor(edict_t *ent)
  */
 void G_RunEntity(edict_t *ent)
 {
-    if (level.freeze && Q_stricmp(ent->classname, "chasecam"))
+    if (level.freeze && Q_strcasecmp(ent->classname, "chasecam"))
     {
         return;
     }
