@@ -19,6 +19,7 @@
  *
  */
 
+#pragma once
 
 // q_shared.h -- included first by ALL program modules
 
