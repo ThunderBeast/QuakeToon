@@ -18,6 +18,7 @@
  *
  */
 #include "client.h"
+ #include <ctype.h>
 
 /*
  *

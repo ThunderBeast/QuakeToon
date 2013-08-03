@@ -104,7 +104,8 @@ typedef enum
 
 #define ROQ_SUPPORT                // whether to use new cinematic system
 
-#define OGG_SUPPORT                // whether to use Ogg Vorbis soundtrack
+// QUAKETOON: reenable
+//#define OGG_SUPPORT                // whether to use Ogg Vorbis soundtrack
 
 #define MD2_AS_MD3                 // whether to load md2s into md3 memory representation
 

@@ -859,7 +859,7 @@ void CL_InitFailedDownloadList(void)
 
     for (i = 0; i < NUM_FAIL_DLDS; i++)
     {
-        sprintf(lastfaileddownload[i], "\0");
+        lastfaileddownload[i][0] = 0;
     }
 
     failedDlListIndex = 0;

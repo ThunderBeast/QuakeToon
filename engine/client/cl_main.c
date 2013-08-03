@@ -284,7 +284,7 @@ void CL_Record_f(void)
     //
     // write out messages to hold the startup information
     //
-    SZ_Init(&buf, buf_data, sizeof(buf_data));
+    SZ_Init(&buf, (byte *) buf_data, sizeof(buf_data));
 
     // send the serverdata
     MSG_WriteByte(&buf, svc_serverdata);
@@ -767,9 +767,9 @@ void CL_Disconnect(void)
     // send a disconnect message to the server
     final[0] = clc_stringcmd;
     strcpy((char *)final + 1, "disconnect");
-    Netchan_Transmit(&cls.netchan, strlen(final), final);
-    Netchan_Transmit(&cls.netchan, strlen(final), final);
-    Netchan_Transmit(&cls.netchan, strlen(final), final);
+    Netchan_Transmit(&cls.netchan, strlen((const char*)final), final);
+    Netchan_Transmit(&cls.netchan, strlen((const char*)final), final);
+    Netchan_Transmit(&cls.netchan, strlen((const char*)final), final);
 
     CL_ClearState();
 

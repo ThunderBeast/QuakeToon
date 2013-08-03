@@ -321,7 +321,7 @@ void CL_Explosion_Particle(vec3_t org, float size, qboolean rocket)
         1, (rocket) ? -2 : -1.5,
         GL_SRC_ALPHA, GL_ONE,
         //GL_ONE, GL_ONE,
-        (size != 0) ? size : (150 - (!rocket) ? 75 : 0), 0,
+        (size != 0) ? size : (150 - ((!rocket) ? 75 : 0)), 0,
         particle_rexplosion1,
         PART_DEPTHHACK_SHORT,
         CL_ExplosionThink, true);
@@ -2057,11 +2057,6 @@ void CL_RocketTrail(vec3_t start, vec3_t end, centity_t *old)
     totallen = len = VectorNormalize(vec);
     dec      = 1.5 * cl_particle_scale->value;
     VectorScale(vec, dec, vec);
-
-/*	len = totallen;
- *      VectorCopy (start, move);
- *      dec = 1.5;//*cl_particle_scale->value;
- *      VectorScale (vec, dec, vec);*/
 
     while (len > 0)
     {

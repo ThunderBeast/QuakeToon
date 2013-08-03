@@ -692,7 +692,7 @@ void CL_ParsePacketEntities(frame_t *oldframe, frame_t *newframe)
 
     while (1)
     {
-        newnum = CL_ParseEntityBits(&bits);
+        newnum = CL_ParseEntityBits((unsigned *) &bits);
         if (newnum >= MAX_EDICTS)
         {
             Com_Error(ERR_DROP, "CL_ParsePacketEntities: bad number:%i", newnum);

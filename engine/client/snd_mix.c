@@ -429,9 +429,9 @@ void S_PaintChannelFrom8(channel_t *ch, sfxcache_t *sc, int count, int offset)
     //as it would always be zero.
     lscale = snd_scaletable[ch->leftvol >> 3];
     rscale = snd_scaletable[ch->rightvol >> 3];
-    sfx    = (signed char *)sc->data + ch->pos;
+    sfx    = (unsigned char *)sc->data + ch->pos;
 
-    samp = &paintbuffer[offset];
+    samp = (portable_samplepair_t*) &paintbuffer[offset];
 
     for (i = 0; i < count; i++, samp++)
     {
