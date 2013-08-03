@@ -67,8 +67,8 @@ printBacktrace(int sig)
 void
 printBacktrace(int sig)
 {
-	printf("Product:      Yamagi Quake II\n");
-	printf("Version:      %s\n", VERSION);
+	printf("Product:      QuakeToon\n");
+	printf("Version:      %f\n", (float) VERSION);
 	printf("Plattform:    %s\n", BUILDSTRING);
 	printf("Architecture: %s\n", CPUSTRING);
 	printf("Compiler:     %s\n", __VERSION__);
@@ -83,7 +83,7 @@ void
 signalhandler(int sig)
 {
 	printf("\n=======================================================\n");
-	printf("\nYamagi Quake II crashed! This should not happen...\n");
+	printf("\nQuakeToon crashed! This should not happen...\n");
 	printf("\nMake sure that you're using the last version. It can\n");
 	printf("be found at http://www.yamagi.org/quake2. If you do,\n");
 	printf("send a bug report to quake2@yamagi.org and include:\n\n");

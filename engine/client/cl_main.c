@@ -1874,7 +1874,9 @@ void CL_Frame(int msec)
     // update audio
     S_Update(cl.refdef.vieworg, cl.v_forward, cl.v_right, cl.v_up);
 
+#ifdef CDA
     CDAudio_Update();
+#endif    
 
     // advance local effects for next frame
     CL_RunDLights();
@@ -1946,7 +1948,9 @@ void CL_Init(void)
     SCR_Init();
     cls.disable_screen = true;          // don't draw yet
 
+#ifdef CDA
     CDAudio_Init();
+#endif    
     CL_InitLocal();
     //IN_Init();
 
@@ -1978,7 +1982,9 @@ void CL_Shutdown(void)
 
     CL_WriteConfiguration();
 
+#ifdef CDA
     CDAudio_Shutdown();
+#endif    
 
     // added delay
     sec = base = Sys_Milliseconds();

@@ -25,6 +25,9 @@
 #include "vlights.h"
 
 void R_Clear(void);
+qboolean QGL_Init(const char *dllname);
+void QGL_Shutdown(void);
+
 
 viddef_t vid;
 

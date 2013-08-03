@@ -1518,7 +1518,9 @@ void SCR_BeginLoadingPlaque(void)
 {
     S_StopAllSounds();
     cl.sound_prepped = false;                   // don't play ambients
+#ifdef CDA    
     CDAudio_Stop();
+#endif    
     //if (cls.disable_screen)
     //	return;
     if (developer->value)
