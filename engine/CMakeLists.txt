@@ -15,19 +15,23 @@ file ( GLOB SCRIPT_FILES   script/*.c )
 
 set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${UI_FILES} ${CLIENT_FILES} ${RENDERER_FILES} ${SOUND_FILES} ${SYSTEM_FILES} ${SCRIPT_FILES} )
 
-add_executable(QuakeToon ${SOURCE_FILES})
-set (CMAKE_EXE_LINKER_FLAGS "-lz -framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")
-set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib -lSDL -lSDLmain -L${CMAKE_SOURCE_DIR}/build/luajit_x86/lib -lluajit-5.1" )
+if (NOT LINUX)
 
-target_link_libraries(QuakeToon vendor )
+    set (CMAKE_EXE_LINKER_FLAGS "-lz -framework AudioUnit -framework Carbon -framework Cocoa -framework CoreAudio -framework ForceFeedback -framework IOKit -framework OpenGL -framework CoreServices")
+    set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -L/usr/local/lib -lSDL -lSDLmain -L${CMAKE_SOURCE_DIR}/build/luajit_x86/lib -lluajit-5.1" )
 
-get_target_property(quaketoonbin QuakeToon LOCATION)
+    add_executable(QuakeToon ${SOURCE_FILES})
 
-add_custom_command(TARGET QuakeToon
-    POST_BUILD
-    COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/bin
-    COMMAND cp ${quaketoonbin} ${CMAKE_SOURCE_DIR}/bin/QuakeToon
-)
+    target_link_libraries(QuakeToon vendor )
+
+    get_target_property(quaketoonbin QuakeToon LOCATION)
+
+    add_custom_command(TARGET QuakeToon
+        POST_BUILD
+        COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/bin
+        COMMAND cp ${quaketoonbin} ${CMAKE_SOURCE_DIR}/bin/QuakeToon
+    )
+endif()
 
 file ( GLOB GAME_FILES game/*.c game/acesrc/*.c )
 
@@ -45,11 +49,19 @@ add_custom_command(TARGET game
 
 set ( SOURCE_FILES ${COMMON_FILES} ${SERVER_FILES} ${SYSTEM_FILES} ${SCRIPT_FILES} )
 
+#if (LINUX)
+#    set (CMAKE_EXE_LINKER_FLAGS -lz -ldl -lm -L${CMAKE_SOURCE_DIR}/build/luajit_x86/lib -lluajit-5.1)
+#endif()    
+
 add_executable(QuakeToonServer ${SOURCE_FILES})
 
 set_target_properties(QuakeToonServer PROPERTIES COMPILE_DEFINITIONS "DEDICATED_ONLY=1 DC_ONLY=1")
 
-target_link_libraries(QuakeToonServer vendor )
+if (LINUX)
+    target_link_libraries(QuakeToonServer vendor -lz -ldl -lm )
+else()
+    target_link_libraries(QuakeToonServer vendor )    
+endif()    
 
 get_target_property(serverbin QuakeToonServer LOCATION)
 

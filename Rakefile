@@ -7,7 +7,26 @@ require 'shellwords'
 
 $buildTarget="Release" # "Debug"
 
-$numCores = Integer(`sysctl hw.ncpu | awk '{print $2}'`)
+include RbConfig
+
+case CONFIG['host_os']
+   when /mswin|windows|mingw32/i
+      $HOST_OS = "windows"
+   when /darwin/i
+      $HOST_OS = "darwin"
+   when /linux-gnu/i
+      $HOST_OS = "linux"
+   else
+      abort("Unknown host config: Config::CONFIG['host_os']: #{Config::CONFIG['host_os']}")
+end
+
+if $HOST_OS == 'darwin'
+  $numCores = Integer(`sysctl hw.ncpu | awk '{print $2}'`)
+elsif $HOST_OS == 'windows'
+  $numCores = ENV['NUMBER_OF_PROCESSORS']
+else 
+  $numCores = Integer(`cat /proc/cpuinfo | grep processor | wc -l`)
+end
 
 task :clobber do
   sh "git clean -fdx"

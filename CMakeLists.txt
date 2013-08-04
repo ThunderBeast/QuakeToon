@@ -4,6 +4,11 @@ project (QuakeToon)
 # Set minimum version
 cmake_minimum_required (VERSION 2.8)
 
+if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+    message("Linux Build")
+    set (LINUX 1)
+endif()
+
 #32 bit for now
 set(CMAKE_OSX_ARCHITECTURES "i386")
 

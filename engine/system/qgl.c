@@ -33,6 +33,8 @@
  * =======================================================================
  */
 
+ #ifndef DEDICATED_ONLY
+
 #include "../renderer/r_local.h"
 #include <SDL/SDL.h>
 
@@ -96,4 +98,6 @@ QGL_Init (void)
 	*/
 	return true;
 }
+
+#endif
 
