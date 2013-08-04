@@ -11,7 +11,7 @@ int luaopen_lfs (lua_State *L);
 static void setloaded(lua_State* l, char* name) 
 {
 	int top = lua_gettop(l);
-	
+
 	lua_getglobal(l, "package");
 	lua_getfield(l, -1, "loaded");
 	lua_getfield(l, -1, name);
@@ -34,5 +34,43 @@ int Script_Init()
 	luaopen_lpeg(l);
 	setloaded(l, "lpeg");
 	luaopen_lfs(l);
-	setloaded(l, "lfs");
+	setloaded(l, "lfs");	
+
+	if (luaL_dofile(l, "alt_getopt.lua"))
+	{
+		printf("Error executing alt_getopt.lua\n");
+	}
+
+	if (luaL_dofile(l, "moonscript.lua"))
+	{
+		printf("Error executing moonscript.lua\n");	
+	}
+
+	// hack for args
+	lua_newtable(l);
+	lua_pushstring(l, "moon");
+	lua_rawseti(l, -2, -1);
+
+	lua_pushstring(l, "moon");
+	lua_rawseti(l, -2, 0);
+
+	lua_pushstring(l, "test.moon");
+	lua_rawseti(l, -2, 1);
+
+
+	lua_setglobal(l, "arg");
+
+	if (luaL_dofile(l, "moonc.lua"))
+	{
+		printf("Error executing moonc.lua:\n%s\n", lua_tostring(l, -1));	
+	}
+	else
+	{
+		if (luaL_dofile(l, "test.lua"))
+		{
+			printf("Error executing test.lua:\n%s\n", lua_tostring(l, -1));	
+		}		
+	}
+
+	return 0;
 }
