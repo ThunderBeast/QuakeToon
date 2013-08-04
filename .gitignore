@@ -1,2 +1,13 @@
 build/*
 bin/*
+vendor/luajit/src/*.h
+vendor/luajit/src/*.s
+vendor/luajit/src/*.o
+vendor/luajit/src/luajit
+vendor/luajit/src/*.a
+vendor/luajit/src/*.so
+vendor/luajit/src/luajit
+vendor/luajit/src/host/*.o
+vendor/luajit/src/host/buildvm*
+vendor/luajit/src/host/minilua
+vendor/luajit/src/jit/*.lua
