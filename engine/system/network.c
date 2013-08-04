@@ -58,15 +58,17 @@ typedef struct
 
 loopback_t loopbacks[2];
 int ip_sockets[2];
+
+#ifdef USE_IP6
 int ip6_sockets[2];
-int ipx_sockets[2];
+#endif
+
 char *multicast_interface = NULL;
 
 int NET_Socket(char *net_interface, int port, netsrc_t type, int family);
 char *NET_ErrorString(void);
 
-void
-NetadrToSockadr(netadr_t *a, struct sockaddr_storage *s)
+static void NetadrToSockadr(netadr_t *a, struct sockaddr_storage *s)
 {
 	struct sockaddr_in6 *s6;
 
@@ -140,14 +142,15 @@ NetadrToSockadr(netadr_t *a, struct sockaddr_storage *s)
 			break;
 
 		case NA_LOOPBACK:
-		case NA_IPX:
-		case NA_BROADCAST_IPX:
+			break;
+
+		default:
+			Com_Error(ERR_FATAL, "NetadrToSockadr: unknown type");
 			break;
 	}
 }
 
-void
-SockadrToNetadr(struct sockaddr_storage *s, netadr_t *a)
+static void SockadrToNetadr(struct sockaddr_storage *s, netadr_t *a)
 {
 	struct sockaddr_in6 *s6;
 
@@ -182,13 +185,17 @@ SockadrToNetadr(struct sockaddr_storage *s, netadr_t *a)
 	}
 }
 
-void
-NET_Init()
+void NET_Init()
 {
+	ip_sockets[0] = ip_sockets[1] = 0;
+
+#ifdef USE_IP6
+	ip6_sockets[0] = ip6_sockets[1] = 0;
+#endif
+
 }
 
-qboolean
-NET_CompareAdr(netadr_t a, netadr_t b)
+qboolean NET_CompareAdr(netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
 	{
@@ -223,8 +230,7 @@ NET_CompareAdr(netadr_t a, netadr_t b)
 /*
  * Compares without the port
  */
-qboolean
-NET_CompareBaseAdr(netadr_t a, netadr_t b)
+qboolean NET_CompareBaseAdr(netadr_t a, netadr_t b)
 {
 	if (a.type != b.type)
 	{
@@ -257,21 +263,10 @@ NET_CompareBaseAdr(netadr_t a, netadr_t b)
 		return false;
 	}
 
-	if (a.type == NA_IPX)
-	{
-		if ((memcmp(a.ipx, b.ipx, 10) == 0))
-		{
-			return true;
-		}
-
-		return false;
-	}
-
 	return false;
 }
 
-char *
-NET_BaseAdrToString(netadr_t a)
+char *NET_BaseAdrToString(netadr_t a)
 {
 	static char s[64], tmp[64];
 	struct sockaddr_storage ss;
@@ -353,8 +348,7 @@ NET_BaseAdrToString(netadr_t a)
 	return s;
 }
 
-char *
-NET_AdrToString(netadr_t a)
+char *NET_AdrToString(netadr_t a)
 {
 	static char s[64];
 	const char *base;
@@ -531,14 +525,12 @@ NET_GetPacket(netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 		{
 			net_socket = ip_sockets[sock];
 		}
+#ifdef USE_IP6		
 		else if (protocol == 1)
 		{
 			net_socket = ip6_sockets[sock];
 		}
-		else
-		{
-			net_socket = ipx_sockets[sock];
-		}
+#endif		
 
 		if (!net_socket)
 		{
@@ -603,6 +595,7 @@ NET_SendPacket(netsrc_t sock, int length, void *data, netadr_t to)
 			}
 
 			break;
+#ifdef USE_IP6			
 
 		case NA_IP6:
 		case NA_MULTICAST6:
@@ -615,17 +608,7 @@ NET_SendPacket(netsrc_t sock, int length, void *data, netadr_t to)
 			}
 
 			break;
-
-		case NA_IPX:
-		case NA_BROADCAST_IPX:
-			net_socket = ipx_sockets[sock];
-
-			if (!net_socket)
-			{
-				return;
-			}
-
-			break;
+#endif			
 
 		default:
 			Com_Error(ERR_FATAL, "NET_SendPacket: bad address type");
@@ -730,25 +713,20 @@ NET_SendPacket(netsrc_t sock, int length, void *data, netadr_t to)
 	}
 }
 
-void
-NET_OpenIP(void)
+void NET_OpenIP(void)
 {
 	cvar_t *port, *ip;
 
 	port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET);
 	ip = Cvar_Get("ip", "localhost", CVAR_NOSET);
 
+#ifdef USE_IP6
 	if (!ip6_sockets[NS_SERVER])
 	{
 		ip6_sockets[NS_SERVER] = NET_Socket(ip->string, port->value,
 				NS_SERVER, AF_INET6);
 	}
-
-	if (!ip6_sockets[NS_CLIENT])
-	{
-		ip6_sockets[NS_CLIENT] = NET_Socket(ip->string, PORT_ANY,
-				NS_CLIENT, AF_INET6);
-	}
+#endif	
 
 	if (!ip_sockets[NS_SERVER])
 	{
@@ -756,11 +734,21 @@ NET_OpenIP(void)
 				NS_SERVER, AF_INET);
 	}
 
+#ifdef USE_IP6
+
+	if (!ip6_sockets[NS_CLIENT])
+	{
+		ip6_sockets[NS_CLIENT] = NET_Socket(ip->string, PORT_ANY,
+				NS_CLIENT, AF_INET6);
+	}	
+#endif	
+
 	if (!ip_sockets[NS_CLIENT])
 	{
 		ip_sockets[NS_CLIENT] = NET_Socket(ip->string, PORT_ANY,
 				NS_CLIENT, AF_INET);
 	}
+
 }
 
 /*
@@ -782,17 +770,14 @@ NET_Config(qboolean multiplayer)
 				ip_sockets[i] = 0;
 			}
 
+#ifdef USE_IP6
 			if (ip6_sockets[i])
 			{
 				close(ip6_sockets[i]);
 				ip6_sockets[i] = 0;
 			}
+#endif			
 
-			if (ipx_sockets[i])
-			{
-				close(ipx_sockets[i]);
-				ipx_sockets[i] = 0;
-			}
 		}
 	}
 	else
@@ -961,14 +946,12 @@ int NET_Socket(char *net_interface, int port, netsrc_t type, int family)
 	return newsocket;
 }
 
-void
-NET_Shutdown(void)
+void NET_Shutdown(void)
 {
 	NET_Config(false); /* close sockets */
 }
 
-char *
-NET_ErrorString(void)
+char* NET_ErrorString(void)
 {
 	int code;
 
@@ -979,16 +962,19 @@ NET_ErrorString(void)
 /*
  * sleeps msec or until net socket is ready
  */
-void
-NET_Sleep(int msec)
+void NET_Sleep(int msec)
 {
 	struct timeval timeout;
 	fd_set fdset;
 	extern cvar_t *dedicated;
 	extern qboolean stdin_active;
 
+#ifdef USE_IP6
 	if ((!ip_sockets[NS_SERVER] &&
 		 !ip6_sockets[NS_SERVER]) || (dedicated && !dedicated->value))
+#else
+	if (!ip_sockets[NS_SERVER] || (dedicated && !dedicated->value))		
+#endif		
 	{
 		return; /* we're not a server, just run full speed */
 	}
@@ -1001,10 +987,17 @@ NET_Sleep(int msec)
 	}
 
 	FD_SET(ip_sockets[NS_SERVER], &fdset); /* IPv4 network socket */
+#ifdef USE_IP6	
 	FD_SET(ip6_sockets[NS_SERVER], &fdset); /* IPv6 network socket */
+#endif	
 	timeout.tv_sec = msec / 1000;
 	timeout.tv_usec = (msec % 1000) * 1000;
-	select(MAX(ip_sockets[NS_SERVER],
-					ip6_sockets[NS_SERVER]) + 1, &fdset, NULL, NULL, &timeout);
+
+#ifdef USE_IP6		
+	select(MAX(ip_sockets[NS_SERVER], ip6_sockets[NS_SERVER]) + 1, &fdset, NULL, NULL, &timeout);
+#else
+	select(ip_sockets[NS_SERVER] + 1, &fdset, NULL, NULL, &timeout);
+#endif	
+					
 }
 
