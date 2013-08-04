@@ -4,9 +4,6 @@ set ( TARGET_NAME QuakeToon )
 
 add_definitions(-DC_ONLY=1) 
 
-#FIXME
-include_directories(/usr/local/include/SDL)
-
 file ( GLOB COMMON_FILES   qcommon/*.c game/q_shared.c game/m_flash.c)
 file ( GLOB CLIENT_FILES   client/*.c )
 file ( GLOB SERVER_FILES   server/*.c )
