@@ -8,6 +8,11 @@ int luaopen_lfs (lua_State *L);
 // put whatever is on top of stack into package.loaded under name something is
 // already there
 
+int moonscript_echo(int x)
+{
+	return x;
+}
+
 static void setloaded(lua_State* l, char* name) 
 {
 	int top = lua_gettop(l);
@@ -51,12 +56,11 @@ int Script_Init()
 	lua_pushstring(l, "moon");
 	lua_rawseti(l, -2, -1);
 
-	lua_pushstring(l, "moon");
+	lua_pushstring(l, "moonc");
 	lua_rawseti(l, -2, 0);
 
 	lua_pushstring(l, "test.moon");
 	lua_rawseti(l, -2, 1);
-
 
 	lua_setglobal(l, "arg");
 
