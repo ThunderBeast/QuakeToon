@@ -57,6 +57,7 @@ get_target_property(serverbin QuakeToonServer LOCATION)
 
 add_custom_command(TARGET QuakeToonServer
     POST_BUILD    
+    COMMAND mkdir -p ${CMAKE_SOURCE_DIR}/bin
     COMMAND cp ${serverbin} ${CMAKE_SOURCE_DIR}/bin/QuakeToonServer
 )
 

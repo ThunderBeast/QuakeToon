@@ -12,6 +12,8 @@ set(CMAKE_OSX_ARCHITECTURES "i386")
 #include_directories (vendor/STB)
 #include_directories (vendor/unzip)
 
+include_directories( build/luajit_x86/include/luajit-2.0 )
+
 # Add targets
 add_subdirectory (vendor)
 add_subdirectory (engine)

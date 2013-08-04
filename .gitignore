@@ -1,5 +1,6 @@
 build/*
 bin/*
+cmake_osx/*
 vendor/luajit/src/*.h
 vendor/luajit/src/*.s
 vendor/luajit/src/*.o
