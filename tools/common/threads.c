@@ -415,7 +415,7 @@ void RunThreadsOn( int workcnt, qboolean showpacifier, void ( *func )( int ) ){
    =======================================================================
  */
 
-#if defined( __linux__ ) 
+#if defined( __linux__ ) || defined( __APPLE__ )
 #define USED
 
 // Setting default Threads to 1
@@ -541,7 +541,9 @@ void RunThreadsOn( int workcnt, qboolean showpacifier, void ( *func )( int ) ){
 		if ( pthread_mutexattr_init( &mattrib ) != 0 ) {
 			Error( "pthread_mutexattr_init failed" );
 		}
-#if __GLIBC_MINOR__ == 1
+#if defined(__APPLE__)
+		if ( pthread_mutexattr_settype( &mattrib, PTHREAD_MUTEX_NORMAL ) != 0 )
+#elif __GLIBC_MINOR__ == 1
 		if ( pthread_mutexattr_settype( &mattrib, PTHREAD_MUTEX_FAST_NP ) != 0 )
 #else
 		if ( pthread_mutexattr_settype( &mattrib, PTHREAD_MUTEX_ADAPTIVE_NP ) != 0 )

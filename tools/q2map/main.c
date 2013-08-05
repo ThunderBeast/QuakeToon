@@ -655,12 +655,20 @@ int main( int argc, char **argv ){
 	{
 		mapname = argv[argc - 1];
 
+        // bsp seems to have issued with multiple threads
+        int _numthreads = numthreads;
+        numthreads = 1;
+
 		if ( do_bsp ) {
 			BSP_Main();
 		}
+        numthreads = _numthreads;
+
 		if ( do_vis ) {
 			VIS_Main();
 		}
+        // rad threading also seems bustes
+        numthreads = 1;
 		if ( do_rad ) {
 			RAD_Main();
 		}
