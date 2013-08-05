@@ -21,3 +21,4 @@ include_directories( build/luajit_x86/include/luajit-2.0 vendor/lpeg vendor/unzi
 # Add targets
 add_subdirectory (vendor)
 add_subdirectory (engine)
+add_subdirectory (tools)
